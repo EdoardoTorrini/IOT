@@ -35,7 +35,7 @@ public class DeviceModel {
     @Override
     public String toString() {
         String sRet = String.format(
-                "[ DEVICE ] - [ DEVICE ID ]: {}, [ ROOM ]: {}, [ SOFTWARE VERSION ]: {}, [ MANUFACTURER ]: {}",
+                "[ DEVICE ] - [ DEVICE ID ]: %s, [ ROOM ]: %s, [ SOFTWARE VERSION ]: %s, [ MANUFACTURER ]: %s",
                 this.sDeviceId, this.sRoomId, this.sSoftwareVersion, this.sManufacturer
         );
 

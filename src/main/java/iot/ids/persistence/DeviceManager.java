@@ -46,6 +46,18 @@ public class DeviceManager {
     }
 
     public HashMap<String, DeviceModel> getDeviceMap() { return this.mDeviceMap; }
+    public int updateDeviceMapById(String sId, DeviceModel updateDeviceModel) {
+        int nRet = -1;
+
+        if (this.mDeviceMap.containsKey(sId)) {
+            this.mDeviceMap.replace(sId, updateDeviceModel);
+            nRet = 0;
+        }
+        else
+            throw new ArrayIndexOutOfBoundsException(String.format("%s not EXISTS", sId));
+
+        return nRet;
+    }
 
     @Override
     public String toString() {
