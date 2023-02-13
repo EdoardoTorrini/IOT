@@ -1,13 +1,13 @@
-from base import Base
+from model import Base
 
 
 class PeopleCounter(Base):
 
-    def __init__(self, sID="", nPeopleIn=0, nPeopleOut=0):
+    def __init__(self, code="", people_in=0, people_out=0):
 
-        super(PeopleCounter, self).__init__(sID)
-        self.nPeopleIn = nPeopleIn
-        self.nPeopleOut = nPeopleOut
+        super(PeopleCounter, self).__init__(code)
+        self.nPeopleIn = people_in
+        self.nPeopleOut = people_out
 
     def __repr__(self):
 

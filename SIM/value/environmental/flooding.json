@@ -1,0 +1,177 @@
+[
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 22,
+      "humidity": 92,
+      "uv_index": 0.6971832943034986,
+      "smoke_level": 0.2632665861667025
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 21,
+      "humidity": 96,
+      "uv_index": 0.3320500705921212,
+      "smoke_level": 0.9981556749331056
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 22,
+      "humidity": 100,
+      "uv_index": 0.4515854506346627,
+      "smoke_level": 0.08457995379707117
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 23,
+      "humidity": 88,
+      "uv_index": 0.02227029151563853,
+      "smoke_level": 0.5613061390204647
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 25,
+      "humidity": 80,
+      "uv_index": 0.4442964384582593,
+      "smoke_level": 0.21975110457460978
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 24,
+      "humidity": 95,
+      "uv_index": 0.13870174646687927,
+      "smoke_level": 0.07422550800530303
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 23,
+      "humidity": 92,
+      "uv_index": 0.0697325981607666,
+      "smoke_level": 0.7225921101798046
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 25,
+      "humidity": 83,
+      "uv_index": 0.2285263723219827,
+      "smoke_level": 0.35746595829308825
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 24,
+      "humidity": 87,
+      "uv_index": 0.6349282002812805,
+      "smoke_level": 0.6152215167772537
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 23,
+      "humidity": 98,
+      "uv_index": 0.9254155492542961,
+      "smoke_level": 0.3306270793739964
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 21,
+      "humidity": 91,
+      "uv_index": 0.2201589799463789,
+      "smoke_level": 0.6578048717792955
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 20,
+      "humidity": 85,
+      "uv_index": 0.115189033661387,
+      "smoke_level": 0.683251244146241
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 24,
+      "humidity": 92,
+      "uv_index": 0.7681500558549921,
+      "smoke_level": 0.09880225936948539
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 23,
+      "humidity": 81,
+      "uv_index": 0.7846989539431182,
+      "smoke_level": 0.9183632811637793
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 23,
+      "humidity": 90,
+      "uv_index": 0.4746716775229708,
+      "smoke_level": 0.12088344908597237
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 21,
+      "humidity": 95,
+      "uv_index": 0.8961013059162263,
+      "smoke_level": 0.9681829758752063
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 21,
+      "humidity": 99,
+      "uv_index": 0.9963423672584905,
+      "smoke_level": 0.685768976965107
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 20,
+      "humidity": 82,
+      "uv_index": 0.02804336990526035,
+      "smoke_level": 0.27825655203810273
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 25,
+      "humidity": 86,
+      "uv_index": 0.43390516056532913,
+      "smoke_level": 0.887257783521323
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 22,
+      "humidity": 90,
+      "uv_index": 0.5301346773952348,
+      "smoke_level": 0.4685738157790138
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 24,
+      "humidity": 80,
+      "uv_index": 0.17775361679898083,
+      "smoke_level": 0.6997371069973068
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 24,
+      "humidity": 89,
+      "uv_index": 0.34764542081368355,
+      "smoke_level": 0.10003860542418175
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 20,
+      "humidity": 87,
+      "uv_index": 0.07868140869598272,
+      "smoke_level": 0.9583627597887543
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 22,
+      "humidity": 92,
+      "uv_index": 0.42371363357505254,
+      "smoke_level": 0.41540413106144314
+   },
+   {
+      "code": "environment.monitoring.01",
+      "temperature": 25,
+      "humidity": 88,
+      "uv_index": 0.9171133043705063,
+      "smoke_level": 0.17125384771834962
+   }
+]

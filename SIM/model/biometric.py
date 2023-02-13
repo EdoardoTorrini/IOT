@@ -1,12 +1,12 @@
-from base import Base
+from model import Base
 
 
 class BiometricSensor(Base):
 
-    def __init__(self, sID="", sToken=""):
+    def __init__(self, code="", token=""):
         
-        super(BiometricSensor, self).__init__(sID)
-        self.sToken = sToken
+        super(BiometricSensor, self).__init__(code)
+        self.sToken = token
 
     def __repr__(self):
 

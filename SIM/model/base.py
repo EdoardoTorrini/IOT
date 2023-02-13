@@ -7,8 +7,8 @@ class Base:
 
     def __init__(self, sID=""):
 
-        self.sID = sID
-        self.data = datetime.now()
+        self.id = sID
+        self.data = datetime.now().timestamp()
 
     def get_json(self):
 

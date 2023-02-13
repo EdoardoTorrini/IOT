@@ -17,13 +17,15 @@ function App() {
     return (
         <div>
             {data ? (
-                <ul>
+                <table>
                     {data.map(item => (
-                        <li>
-                            {item.code}, {item.category}, {item.description}, {item.data}
-                        </li>
+                        <tr id={item.code}>
+                            <th>{item.category}</th>
+                            <th>{item.description}</th>
+                            <th>{item.data}</th>
+                        </tr>
                     ))}
-                </ul>
+                </table>
             ) : (
                 <div>Loading...</div>
             )}

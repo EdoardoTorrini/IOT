@@ -1,22 +1,22 @@
-from base import Base
+from model import Base
 
 
 class EnvironmentalMonitoring(Base):
 
-    def __init__(self, sID="", dTemp=0.0, dHumidity=0.0, dUVIndex=0.0, dSmokeLvl=0.0):
+    def __init__(self, code="", temperature=0.0, humidity=0.0, uv_index=0.0, smoke_level=0.0):
 
-        super(EnvironmentalMonitoring, self).__init__(sID)
-        self.dTemp = dTemp
-        self.dHumidity = dHumidity
-        self.dUVIndex = dUVIndex
-        self.dSmokeLvl = dSmokeLvl
+        super(EnvironmentalMonitoring, self).__init__(code)
+        self.temperature = temperature
+        self.humidity = humidity
+        self.uvIndex = uv_index
+        self.smokeLevel = smoke_level
 
     def __repr__(self):
 
         return f"[ ENVIRONMENTAL MONITORING ] -> " \
                f"[ ID ]: {self.sID}" \
-               f"[ TEMPERATURE ]: {self.dTemp}" \
-               f"[ HUMIDITY ]: {self.dHumidity}" \
-               f"[ UVINDEX ]: {self.dUVIndex}" \
-               f"[ SMOKE LEVEL ]: {self.dSmokeLvl}" \
+               f"[ TEMPERATURE ]: {self.temperature}" \
+               f"[ HUMIDITY ]: {self.humidity}" \
+               f"[ UVINDEX ]: {self.uvIndex}" \
+               f"[ SMOKE LEVEL ]: {self.smokeLevel}" \
                f"[ TIME ]: {self.data}"

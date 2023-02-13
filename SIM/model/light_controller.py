@@ -1,12 +1,12 @@
-from base import Base
+from model import Base
 
 
 class LightController(Base):
 
-    def __init__(self, sID="", bOn=False):
+    def __init__(self, code="", on=False):
 
-        super(LightController, self).__init__(sID)
-        self.bOn = bOn
+        super(LightController, self).__init__(code)
+        self.bOn = on
 
     def __repr__(self):
 

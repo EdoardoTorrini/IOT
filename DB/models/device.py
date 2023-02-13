@@ -22,5 +22,3 @@ class Device(Base, CTable):
 
         self.__session__ = Session(Engine().engine).session
         self.object = self.__session__.query(Device)
-
-        i = 0

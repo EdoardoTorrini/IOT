@@ -1,12 +1,12 @@
-from base import Base
+from model import Base
 
 
 class AlarmController(Base):
 
-    def __init__(self, sID="", bOn=False):
+    def __init__(self, code="", on=False):
     
-        super(AlarmController, self).__init__(sID)
-        self.bOn = bOn
+        super(AlarmController, self).__init__(code)
+        self.bOn = on
 
     def __repr__(self):
 
