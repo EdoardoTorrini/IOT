@@ -15,9 +15,9 @@ function App() {
     }, []);
 
     return (
-        <div id="div_table" class="container text-center">
+        <div id="div_table" className="container text-center">
             {data ? (
-                <table class="table table-striped">
+                <table className="table table-striped">
                     <tbody>
                         <tr>
                             <th>CATEGORIA</th>
@@ -25,7 +25,7 @@ function App() {
                             <th>DATA</th>
                         </tr>
                         {data.map(item => (
-                            <tr key={item.code}>
+                            <tr className="log" key={item.code}>
                                 <td>{item.category}</td>
                                 <td>{item.description}</td>
                                 <td>{item.data}</td>
