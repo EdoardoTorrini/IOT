@@ -12,5 +12,6 @@ class Engine:
         self.engine = create_engine(
             "sqlite:///{}".format(DB_DIR),
             echo=True,
-            future=True
+            future=True,
+            connect_args={'check_same_thread': False}
         )
