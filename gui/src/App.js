@@ -15,21 +15,27 @@ function App() {
     }, []);
 
     return (
-        <div>
+        <div id="div_table" class="container text-center">
             {data ? (
-                <table>
-                    {data.map(item => (
-                        <tr id={item.code}>
-                            <th>{item.category}</th>
-                            <th>{item.description}</th>
-                            <th>{item.data}</th>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th>CATEGORIA</th>
+                            <th>DESCRIZIONE</th>
+                            <th>DATA</th>
                         </tr>
-                    ))}
+                        {data.map(item => (
+                            <tr key={item.code}>
+                                <td>{item.category}</td>
+                                <td>{item.description}</td>
+                                <td>{item.data}</td>
+                            </tr>
+                        ))}
+                    </tbody>
                 </table>
             ) : (
                 <div>Loading...</div>
             )}
-            <h2>Hello World!</h2>
         </div>
     )
 }
