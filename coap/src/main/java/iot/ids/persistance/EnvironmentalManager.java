@@ -3,49 +3,19 @@ package iot.ids.persistance;
 import com.google.gson.Gson;
 import iot.ids.configuration.MqttConfigurationParameters;
 import iot.ids.models.EnvironmentalModel;
+import iot.ids.persistance.base.Base;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
 import java.util.UUID;
 
-public class EnvironmentalManager extends Thread {
-    private final static Logger logger = LoggerFactory.getLogger(EnvironmentalManager.class);
+public class EnvironmentalManager extends Base {
     protected EnvironmentalModel environmentalModel;
-    private Gson gson;
-    private IMqttClient client;
-    private final String topic;
 
     public EnvironmentalManager() throws MqttException {
-        this.topic = String.format(
-                "%s/%s", MqttConfigurationParameters.MQTT_BASIC_TOPIC,
-                MqttConfigurationParameters.TOPIC_ENVIRONMENT
-        );
-
-        this.init();
-        this.gson = new Gson();
-        this.environmentalModel = new EnvironmentalModel();
-    }
-
-    public void init() throws MqttException {
-        String clientID = UUID.randomUUID().toString();
-        MqttClientPersistence persistence = new MemoryPersistence();
-
-        this.client = new MqttClient(
-                String.format("tcp://%s:%d", MqttConfigurationParameters.BROKER_ADDRESS, MqttConfigurationParameters.BROKER_PORT),
-                clientID, persistence
-        );
-
-        MqttConnectOptions options = new MqttConnectOptions();
-        options.setUserName(MqttConfigurationParameters.MQTT_USERNAME);
-        options.setPassword(MqttConfigurationParameters.MQTT_PASSWORD.toCharArray());
-        options.setAutomaticReconnect(true);
-        options.setCleanSession(true);
-        options.setConnectionTimeout(10);
-
-        this.client.connect(options);
+        super(MqttConfigurationParameters.TOPIC_ENVIRONMENT);
     }
 
     @Override
@@ -55,21 +25,24 @@ public class EnvironmentalManager extends Thread {
             try {
                 this.client.subscribe(this.topic, new IMqttMessageListener() {
                     @Override
-                    public void messageArrived(String topic, MqttMessage mqttMessage) throws Exception {
-                        byte[] bPayload = mqttMessage.getPayload();
-                        String log = String.format(
-                                "Message Recived [ TOPIC ]: %s, [ MESSAGE ]: %s",
-                                topic, new String(bPayload)
-                        );
-                        logger.warn(log);
+                    public void messageArrived(String topic, MqttMessage mqttMessage){
+                        try {
+                            byte[] bPayload = mqttMessage.getPayload();
+                            String log = String.format(
+                                    "Message Recived [ TOPIC ]: %s, [ MESSAGE ]: %s",
+                                    topic, new String(bPayload)
+                            );
+                            logger.warn(log);
 
-                        String data = new String(bPayload);
-                        EnvironmentalModel obj = gson.fromJson(
-                                gson.toJson(data),
-                                EnvironmentalModel.class
-                        );
+                            String data = new String(bPayload);
 
-                        int i = 0;
+                            EnvironmentalManager.this.environmentalModel = gson.fromJson(data, EnvironmentalModel.class);
+
+                            int i = 0;
+                        }
+                        catch (Exception eErr) {
+                            logger.error("[ MESSAGE ]: {}", eErr.getMessage());
+                        }
                     }
                 });
             } catch (MqttException eErr) {
@@ -78,6 +51,10 @@ public class EnvironmentalManager extends Thread {
                         eErr.getMessage(), eErr.getReasonCode()
                 );
                 logger.error(log);
+            } catch (Exception eErr) {
+                String log = String.format("[ MESSAGE ]: %s", eErr.getMessage());
+                logger.error(log);
+
             }
         }
 
@@ -86,17 +63,4 @@ public class EnvironmentalManager extends Thread {
     public EnvironmentalModel getEnvironmentalModel() { return this.environmentalModel; }
     public void setEnvironmentalModel(EnvironmentalModel environmentalModel) { this.environmentalModel = environmentalModel; }
 
-    public static void main(String[] args) {
-        try {
-            EnvironmentalManager tmp = new EnvironmentalManager();
-            tmp.start();
-        }
-        catch (Exception eErr) {
-            String log = String.format(
-                    "on MQTTConsumer Err: %s, Cause: %s",
-                    eErr.getMessage(), eErr.getCause()
-            );
-            logger.error(log);
-        }
-    }
 }

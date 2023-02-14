@@ -41,7 +41,12 @@ class Publisher(Thread):
                     self.jData = EnvironmentalMonitoring(**value).get_json()
                     self.publish()
 
-                time.sleep(5)
+                if self.check_model(value, SmartDoor):
+
+                    self.jData = SmartDoor(**value).get_json()
+                    self.publish()
+
+                time.sleep(10)
 
                 if self.bStop:
                     self.client.loop_stop()

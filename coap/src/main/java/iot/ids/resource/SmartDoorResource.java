@@ -1,7 +1,8 @@
 package iot.ids.resource;
 
 import com.google.gson.Gson;
-import iot.ids.persistance.EnvironmentalManager;
+import iot.ids.models.SmartDoorModel;
+import iot.ids.persistance.SmartDoorManager;
 import iot.utils.CoreInterfaces;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.coap.CoAP;
@@ -14,14 +15,14 @@ import org.slf4j.LoggerFactory;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class EnvironmentalResource extends CoapResource {
-    private static final String OBJECT_TITLE = "EnvironmentalMonitoringResorce";
-    private EnvironmentalManager environmentalManager;
-    private static final Logger logger = LoggerFactory.getLogger(EnvironmentalResource.class);
-
+public class SmartDoorResource extends CoapResource {
+    private static final String OBJECT_TITLE = "SmartDoorLockResorce";
+    private SmartDoorManager smartDoorManager;
+    private SmartDoorModel smartDoorModel = null;
+    private static final Logger logger = LoggerFactory.getLogger(SmartDoorResource.class);
     private Gson gson;
 
-    public EnvironmentalResource(String name) throws MqttException {
+    public SmartDoorResource(String name) throws MqttException {
         super(name);
 
         this.init();
@@ -32,8 +33,8 @@ public class EnvironmentalResource extends CoapResource {
         this.gson = new Gson();
 
         // launch the thread for reading the data from the SIM service
-        this.environmentalManager = new EnvironmentalManager();
-        this.environmentalManager.start();
+        this.smartDoorManager = new SmartDoorManager();
+        this.smartDoorManager.start();
 
         setObservable(true);
         setObserveType(CoAP.Type.CON);
@@ -44,7 +45,7 @@ public class EnvironmentalResource extends CoapResource {
         getAttributes().setObservable();
 
         Timer timer = new Timer();
-        timer.schedule(new UpdateTask(), 0, 10000);
+        timer.schedule(new SmartDoorResource.UpdateTask(), 0, 10000);
     }
 
     private class UpdateTask extends TimerTask {
@@ -58,8 +59,7 @@ public class EnvironmentalResource extends CoapResource {
     @Override
     public void handleGET(CoapExchange exchange) {
         try {
-            String payload = gson.toJson(this.environmentalManager.getEnvironmentalModel());
-
+            String payload = gson.toJson(this.smartDoorManager.getSmartDoorModel());
             exchange.respond(CoAP.ResponseCode.CONTENT, payload, exchange.getRequestOptions().getAccept());
             logger.warn("[ PAYLOAD ]: {}", payload);
         }

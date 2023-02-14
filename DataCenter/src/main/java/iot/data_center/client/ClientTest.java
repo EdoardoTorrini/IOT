@@ -10,7 +10,7 @@ public class ClientTest {
     private static final Logger logger = LoggerFactory.getLogger(ClientTest.class);
 
     public static void main(String[] args) {
-        String resource = "coap://localhost:5683/";
+        String resource = "coap://localhost:5683/environmental";
 
         CoapClient client = new CoapClient(resource);
 
@@ -20,9 +20,7 @@ public class ClientTest {
         CoapObserveRelation relation = client.observe(request, new CoapHandler() {
 
             public void onLoad(CoapResponse response) {
-                String content = response.getResponseText();
-                logger.info("Notification Response Pretty Print: \n{}", Utils.prettyPrint(response));
-                logger.info("NOTIFICATION Body: " + content);
+                logger.info("[ MESSAGE ]: {}", new String(response.getPayload()));
             }
 
             public void onError() {
@@ -31,7 +29,7 @@ public class ClientTest {
         });
 
         try {
-            Thread.sleep(10000);
+            Thread.sleep(100000000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

@@ -18,6 +18,14 @@ public class EnvironmentalModel extends Base {
         this.smokeLevel = smokeLevel;
     }
 
+    public EnvironmentalModel(String id, double data, double temperature, double humidity, double uvIndex, double smokeLevel) {
+        super(id, data);
+        this.temperature = temperature;
+        this.humidity = humidity;
+        this.uvIndex = uvIndex;
+        this.smokeLevel = smokeLevel;
+    }
+
     public double getTemperature() { return temperature; }
 
     public void setTemperature(double temperature) { this.temperature = temperature; }
@@ -37,7 +45,7 @@ public class EnvironmentalModel extends Base {
     @Override
     public String toString() {
         String sRet = String.format(
-                "[ ENVIRONMENTAL MODEL ] -> [ ID ]: %s, [ TEMPERATURE ]: %f, [ HUMIDITY ]: %f, [ UV INDEX ]: %f, [ SMOKE LEVEL ]: %f, [ TIME ]: %d",
+                "[ ENVIRONMENTAL MODEL ] -> [ ID ]: %s, [ TEMPERATURE ]: %f, [ HUMIDITY ]: %f, [ UV INDEX ]: %f, [ SMOKE LEVEL ]: %f, [ TIME ]: %f",
                 this.id, this.temperature, this.humidity, this.uvIndex, this.smokeLevel, this.data
         );
         return sRet;

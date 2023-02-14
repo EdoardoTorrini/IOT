@@ -38,7 +38,7 @@ public class EnvironmentalModel extends Base {
     public String toString() {
         String sRet = String.format(
                 "[ ENVIRONMENTAL MODEL ] -> [ ID ]: %s, [ TEMPERATURE ]: %f, [ HUMIDITY ]: %f, [ UV INDEX ]: %f, [ SMOKE LEVEL ]: %f, [ TIME ]: %d",
-                this.id, this.temperature, this.humidity, this.uvIndex, this.smokeLevel, this.time
+                this.id, this.temperature, this.humidity, this.uvIndex, this.smokeLevel, this.data
         );
         return sRet;
     }

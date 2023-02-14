@@ -2,16 +2,21 @@ package iot.data_center.models.base;
 
 public class Base {
     protected String id;
-    protected long time;
+    protected double data;
 
     public Base(String id) {
         this.id = id;
-        this.time = System.currentTimeMillis();
+        this.data = System.currentTimeMillis();
+    }
+
+    public Base(String id, double time) {
+        this.id = id;
+        this.data = time;
     }
 
     public String getId() { return id; }
 
     public void setId(String id) { this.id = id; }
 
-    public long getTime() { return time; }
+    public double getTime() { return data; }
 }

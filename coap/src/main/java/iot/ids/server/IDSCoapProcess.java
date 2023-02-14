@@ -1,6 +1,7 @@
 package iot.ids.server;
 
 import iot.ids.resource.EnvironmentalResource;
+import iot.ids.resource.SmartDoorResource;
 import org.eclipse.californium.core.CoapServer;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
@@ -13,6 +14,7 @@ public class IDSCoapProcess extends CoapServer {
         super();
 
         this.add(new EnvironmentalResource("environmental"));
+        this.add(new SmartDoorResource("door"));
     }
 
     public static void main(String[] args) {
