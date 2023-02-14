@@ -7,10 +7,14 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.InvocationTargetException;
+
 public class IDSCoapProcess extends CoapServer {
     private static final Logger logger = LoggerFactory.getLogger(IDSCoapProcess.class);
 
-    public IDSCoapProcess() throws MqttException {
+    public IDSCoapProcess() throws MqttException, InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
+
         super();
 
         this.add(new EnvironmentalResource("environmental"));

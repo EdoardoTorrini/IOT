@@ -9,6 +9,8 @@ public class SmartDoorModel extends Base {
     private boolean open;
     private double accelleration;
 
+    public SmartDoorModel() { super(""); }
+
     public SmartDoorModel(String id, boolean lock, boolean open, double accelleration) {
         super(id);
         this.lock = lock;

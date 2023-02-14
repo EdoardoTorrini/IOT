@@ -1,7 +1,9 @@
 package iot.ids.resource;
 
 import com.google.gson.Gson;
-import iot.ids.persistance.EnvironmentalManager;
+import iot.ids.configuration.MqttConfigurationParameters;
+import iot.ids.models.EnvironmentalModel;
+import iot.ids.persistance.GenericManager;
 import iot.utils.CoreInterfaces;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.coap.CoAP;
@@ -11,29 +13,35 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class EnvironmentalResource extends CoapResource {
     private static final String OBJECT_TITLE = "EnvironmentalMonitoringResorce";
-    private EnvironmentalManager environmentalManager;
+    private GenericManager<EnvironmentalModel> genericManager;
     private static final Logger logger = LoggerFactory.getLogger(EnvironmentalResource.class);
 
     private Gson gson;
 
-    public EnvironmentalResource(String name) throws MqttException {
+    public EnvironmentalResource(String name) throws MqttException, InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
+
         super(name);
 
         this.init();
     }
 
-    private void init() throws MqttException {
+    private void init() throws MqttException, InvocationTargetException,
+            NoSuchMethodException, InstantiationException, IllegalAccessException {
+
         getAttributes().setTitle(OBJECT_TITLE);
         this.gson = new Gson();
 
         // launch the thread for reading the data from the SIM service
-        this.environmentalManager = new EnvironmentalManager();
-        this.environmentalManager.start();
+
+        this.genericManager = new GenericManager<>(MqttConfigurationParameters.TOPIC_ENVIRONMENT, EnvironmentalModel.class);
+        this.genericManager.start();
 
         setObservable(true);
         setObserveType(CoAP.Type.CON);
@@ -58,7 +66,7 @@ public class EnvironmentalResource extends CoapResource {
     @Override
     public void handleGET(CoapExchange exchange) {
         try {
-            String payload = gson.toJson(this.environmentalManager.getEnvironmentalModel());
+            String payload = gson.toJson(this.genericManager.getObj());
 
             exchange.respond(CoAP.ResponseCode.CONTENT, payload, exchange.getRequestOptions().getAccept());
             logger.warn("[ PAYLOAD ]: {}", payload);

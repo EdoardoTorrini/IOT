@@ -1,8 +1,9 @@
 package iot.ids.resource;
 
 import com.google.gson.Gson;
+import iot.ids.configuration.MqttConfigurationParameters;
 import iot.ids.models.SmartDoorModel;
-import iot.ids.persistance.SmartDoorManager;
+import iot.ids.persistance.GenericManager;
 import iot.utils.CoreInterfaces;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.coap.CoAP;
@@ -12,29 +13,33 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class SmartDoorResource extends CoapResource {
     private static final String OBJECT_TITLE = "SmartDoorLockResorce";
-    private SmartDoorManager smartDoorManager;
-    private SmartDoorModel smartDoorModel = null;
+    private GenericManager<SmartDoorModel> genericManager;
     private static final Logger logger = LoggerFactory.getLogger(SmartDoorResource.class);
     private Gson gson;
 
-    public SmartDoorResource(String name) throws MqttException {
+    public SmartDoorResource(String name) throws MqttException, InvocationTargetException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException {
+
         super(name);
 
         this.init();
     }
 
-    private void init() throws MqttException {
+    private void init() throws MqttException, InvocationTargetException, NoSuchMethodException,
+            InstantiationException, IllegalAccessException {
+
         getAttributes().setTitle(OBJECT_TITLE);
         this.gson = new Gson();
 
         // launch the thread for reading the data from the SIM service
-        this.smartDoorManager = new SmartDoorManager();
-        this.smartDoorManager.start();
+        this.genericManager = new GenericManager<>(MqttConfigurationParameters.TOPIC_DOOR, SmartDoorModel.class);
+        this.genericManager.start();
 
         setObservable(true);
         setObserveType(CoAP.Type.CON);
@@ -59,7 +64,7 @@ public class SmartDoorResource extends CoapResource {
     @Override
     public void handleGET(CoapExchange exchange) {
         try {
-            String payload = gson.toJson(this.smartDoorManager.getSmartDoorModel());
+            String payload = gson.toJson(this.genericManager.getObj());
             exchange.respond(CoAP.ResponseCode.CONTENT, payload, exchange.getRequestOptions().getAccept());
             logger.warn("[ PAYLOAD ]: {}", payload);
         }

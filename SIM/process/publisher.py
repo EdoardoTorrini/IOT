@@ -1,23 +1,21 @@
 from threading import Thread
 import paho.mqtt.client as mqtt
 
-from model import SmartDoor, AlarmController, BiometricSensor
-from model import LightController, PeopleCounter, EnvironmentalMonitoring
-
 from configuration.mqtt_config_param import MQTTConfParam
 
-import json
-import itertools
-import time
+import json, itertools, time
 
 
 class Publisher(Thread):
     
-    def __init__(self, sTopic, fData):
+    def __init__(self, sTopic, fData, obj=None, duty_cycle=10):
 
         super(Publisher, self).__init__()
         self.sTopic = sTopic
         self.aData = json.loads(fData)
+
+        self.obj = obj
+        self.duty_cycle = duty_cycle
 
         self.client = None
         self.jData = None
@@ -28,28 +26,25 @@ class Publisher(Thread):
 
         try:
 
-            sPubId = f"python-{self.sTopic}"
-            self.client = mqtt.Client(sPubId)
+            self.client = mqtt.Client(f"python-{self.sTopic}")
             self.client.username_pw_set(MQTTConfParam.MQTT_USERNAME, MQTTConfParam.MQTT_PWD)
             self.client.connect(MQTTConfParam.BROKER_ADDRESS, MQTTConfParam.BROKER_PORT)
             self.client.loop_start()
 
             for value in itertools.cycle(self.aData):
 
-                if self.check_model(value, EnvironmentalMonitoring):
+                if self.obj is not None:
 
-                    self.jData = EnvironmentalMonitoring(**value).get_json()
+                    self.jData = self.obj(**value).get_json()
                     self.publish()
 
-                if self.check_model(value, SmartDoor):
+                else:
+                    print(f"[ TOPIC ]: {self.sTopic} -> Check the configuration - self.obj is None")
+                    break
 
-                    self.jData = SmartDoor(**value).get_json()
-                    self.publish()
-
-                time.sleep(10)
+                time.sleep(self.duty_cycle)
 
                 if self.bStop:
-                    self.client.loop_stop()
                     break
 
         except Exception as err:
@@ -71,19 +66,6 @@ class Publisher(Thread):
 
         except Exception as err:
             print(f"[ MESSAGE ]: {err}, [ TYPE ]: {type(err)}")
-
-    def check_model(self, dData, model):
-        bOk = False
-
-        try:
-
-            new = model(**dData)
-            bOk = True
-
-        except Exception as err:
-            pass
-
-        return bOk
 
     def set_stop(self):
         self.bStop = True
