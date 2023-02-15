@@ -1,8 +1,8 @@
-package iot.ids.models;
+package iot.model.sensor;
 
-import iot.ids.models.base.Base;
+import iot.model.BaseModel;
 
-public class EnvironmentalModel extends Base {
+public class EnvironmentalModel extends BaseModel {
     private double temperature;
     private double humidity;
     private double uvIndex;

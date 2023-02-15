@@ -6,13 +6,13 @@ class BiometricSensor(Base):
     def __init__(self, code="", token=""):
         
         super(BiometricSensor, self).__init__(code)
-        self.sToken = token
+        self.token = token
 
     def __repr__(self):
 
         return f"[ BIOMETRIC SENSOR ] -> " \
-               f"[ ID ]: {self.sID}" \
-               f"[ TOKEN ]: {self.sToken}" \
+               f"[ ID ]: {self.id}" \
+               f"[ TOKEN ]: {self.token}" \
                f"[ TIME ]: {self.data}"
     
     

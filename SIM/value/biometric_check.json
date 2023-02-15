@@ -1,27 +1,22 @@
 [
    {
       "token": "297b321a-636f-4bfe-b8a8-9a9ef5f0a75f",
-      "data": "9/17/2022",
       "code": "biometric.login.01"
    },
    {
       "token": "dcef6aa7-7b43-49eb-bdae-31bb0144770d",
-      "data": "11/26/2022",
       "code": "biometric.login.01"
    },
    {
       "token": "77ca62e0-3057-40c7-ac2c-f309098dd17f",
-      "data": "7/26/2022",
       "code": "biometric.login.01"
    },
    {
       "token": "47f73d1c-be3d-4555-b8f8-38ee56753dd8",
-      "data": "8/20/2022",
       "code": "biometric.login.01"
    },
    {
       "token": "be9c0401-6a0f-4505-85c3-4558f8fc8084",
-      "data": "4/14/2022",
       "code": "biometric.login.01"
    }
 ]

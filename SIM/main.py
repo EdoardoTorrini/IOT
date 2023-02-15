@@ -7,8 +7,10 @@ from os import path
 
 
 def main():
+
     ENVIRONMENTAL, E_DATA = "value/environmental/standard.json", None
     SMART_DOOR, SD_DATA = "value/smart_door/random_data.json", None
+    BIOMETRIC, B_DATA = "value/biometric_check.json", None
     TOPIC = {}
 
     if path.exists(ENVIRONMENTAL):
@@ -19,8 +21,13 @@ def main():
         with open(SMART_DOOR, "r+") as f:
             SD_DATA = f.read()
 
+    if path.exists(BIOMETRIC):
+        with open(BIOMETRIC, "r+") as f:
+            B_DATA = f.read()
+
     TOPIC[MQTTConfParam.TOPIC_ENVIRONMENT] = Publisher(MQTTConfParam.TOPIC_ENVIRONMENT, E_DATA, EnvironmentalMonitoring)
     TOPIC[MQTTConfParam.TOPIC_DOOR] = Publisher(MQTTConfParam.TOPIC_DOOR, SD_DATA, SmartDoor)
+    TOPIC[MQTTConfParam.TOPIC_BIOMETRIC] = Publisher(MQTTConfParam.TOPIC_BIOMETRIC, B_DATA, BiometricSensor, duty_cycle=300)
 
     for topic, obj in TOPIC.items():
         if isinstance(obj, Publisher):

@@ -1,15 +1,15 @@
-package iot.ids.models.base;
+package iot.model;
 
-public class Base {
+public class BaseModel {
     protected String id;
     protected double data;
 
-    public Base(String id) {
+    public BaseModel(String id) {
         this.id = id;
         this.data = System.currentTimeMillis();
     }
 
-    public Base(String id, double data) {
+    public BaseModel(String id, double data) {
         this.id = id;
         this.data = data;
     }

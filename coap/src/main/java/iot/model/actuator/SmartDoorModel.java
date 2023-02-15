@@ -1,8 +1,8 @@
-package iot.ids.models;
+package iot.model.actuator;
 
-import iot.ids.models.base.Base;
+import iot.model.BaseModel;
 
-public class SmartDoorModel extends Base {
+public class SmartDoorModel extends BaseModel {
 
     // when the door is lock it couldn't be open, instead when the door is unlocked it could be open or not
     private boolean lock;

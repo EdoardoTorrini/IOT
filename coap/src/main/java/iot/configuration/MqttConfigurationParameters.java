@@ -1,4 +1,4 @@
-package iot.ids.configuration;
+package iot.configuration;
 
 public class MqttConfigurationParameters {
     public static String BROKER_ADDRESS = "155.185.4.4";

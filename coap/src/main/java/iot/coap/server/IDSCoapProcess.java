@@ -1,7 +1,7 @@
-package iot.ids.server;
+package iot.coap.server;
 
-import iot.ids.resource.EnvironmentalResource;
-import iot.ids.resource.SmartDoorResource;
+import iot.coap.resource.sensor.EnvironmentalResource;
+import iot.coap.resource.actuator.SmartDoorResource;
 import org.eclipse.californium.core.CoapServer;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;

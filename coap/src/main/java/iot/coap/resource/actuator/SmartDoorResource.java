@@ -1,9 +1,9 @@
-package iot.ids.resource;
+package iot.coap.resource.actuator;
 
 import com.google.gson.Gson;
-import iot.ids.configuration.MqttConfigurationParameters;
-import iot.ids.models.SmartDoorModel;
-import iot.ids.persistance.GenericManager;
+import iot.configuration.MqttConfigurationParameters;
+import iot.model.actuator.SmartDoorModel;
+import iot.mqtt.persistance.GenericManager;
 import iot.utils.CoreInterfaces;
 import org.eclipse.californium.core.CoapResource;
 import org.eclipse.californium.core.coap.CoAP;

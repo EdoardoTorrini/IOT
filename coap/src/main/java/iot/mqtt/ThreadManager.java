@@ -1,7 +1,7 @@
-package iot.ids.persistance;
+package iot.mqtt;
 
 import com.google.gson.Gson;
-import iot.ids.configuration.MqttConfigurationParameters;
+import iot.configuration.MqttConfigurationParameters;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.slf4j.Logger;
