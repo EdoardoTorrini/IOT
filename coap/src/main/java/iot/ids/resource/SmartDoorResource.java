@@ -18,7 +18,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SmartDoorResource extends CoapResource {
-    private static final String OBJECT_TITLE = "SmartDoorLockResorce";
+    private static final String OBJECT_TITLE = "SmartDoorLockResource";
     private GenericManager<SmartDoorModel> genericManager;
     private static final Logger logger = LoggerFactory.getLogger(SmartDoorResource.class);
     private Gson gson;

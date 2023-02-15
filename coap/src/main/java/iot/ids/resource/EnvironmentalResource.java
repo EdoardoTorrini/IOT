@@ -18,7 +18,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class EnvironmentalResource extends CoapResource {
-    private static final String OBJECT_TITLE = "EnvironmentalMonitoringResorce";
+    private static final String OBJECT_TITLE = "EnvironmentalMonitoringResource";
     private GenericManager<EnvironmentalModel> genericManager;
     private static final Logger logger = LoggerFactory.getLogger(EnvironmentalResource.class);
 

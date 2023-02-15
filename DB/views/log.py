@@ -17,10 +17,10 @@ class LogAPI(FlaskView):
             for log in logs:
                 response.append(
                     {
-                        "code": log.code,
-                        "category": log.category,
-                        "description": log.description,
-                        "data": log.data.strftime('%m/%d/%Y %H:%M')
+                        "code": log[0].code,
+                        "category": log[1],
+                        "description": log[0].description,
+                        "data": log[0].data.strftime('%m/%d/%Y %H:%M')
                     }
                 )
 

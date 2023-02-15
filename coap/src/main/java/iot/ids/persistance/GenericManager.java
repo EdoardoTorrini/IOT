@@ -11,17 +11,17 @@ public class GenericManager<TYPE> extends ThreadManager {
 
     protected TYPE obj;
     protected Constructor<TYPE> constructor;
-    protected Class<?> classOfTYPE;
+    protected Class<?> classOfT;
 
-    public GenericManager(String topic, Class<?> classOfTYPE)
+    public GenericManager(String topic, Class<?> classOfT)
             throws MqttException, NoSuchMethodException, InvocationTargetException,
             InstantiationException, IllegalAccessException {
 
         super(topic);
 
-        this.constructor = (Constructor<TYPE>) classOfTYPE.getConstructor();
+        this.constructor = (Constructor<TYPE>) classOfT.getConstructor();
         this.obj = constructor.newInstance();
-        this.classOfTYPE = classOfTYPE;
+        this.classOfT = classOfT;
     }
 
     @Override
@@ -34,10 +34,7 @@ public class GenericManager<TYPE> extends ThreadManager {
                         String sPayload = new String(mqttMessage.getPayload());
                         String sLog = String.format("[ TOPIC ]: %s [ MESSAGE ]: %s", topic, sPayload);
                         logger.info(sLog);
-
-                        GenericManager.this.obj = (TYPE) gson.fromJson(sPayload, GenericManager.this.classOfTYPE);
-
-                        int i = 0;
+                        GenericManager.this.obj = (TYPE) gson.fromJson(sPayload, GenericManager.this.classOfT);
                     }
                 });
             }

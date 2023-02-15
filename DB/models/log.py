@@ -10,7 +10,7 @@ class Log(Base, CTable):
     __tablename__ = "log"
 
     code = Column(Integer, primary_key=True)
-    category = Column(Integer, ForeignKey("log_type.code"))
+    category = Column(Integer) #, ForeignKey("log_type.code"))
     description = Column(String)
     data = Column(DateTime)
 
@@ -22,4 +22,5 @@ class Log(Base, CTable):
         self.data = datetime.now()
 
         self.__session__ = Session(Engine().engine).session
-        self.object = self.__session__.query(Log)
+        self.object = self.__session__.query(Log, LogType.description).join(LogType, Log.category == LogType.code)
+
