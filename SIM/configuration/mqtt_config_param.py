@@ -7,8 +7,9 @@ class MQTTConfParam(object):
     MQTT_BASE_TOPIC = f"/iot/user/{MQTT_USERNAME}"
 
     TOPIC_ALARM = "alarm"
-    TOPIC_BIOMETRIC = "biometric"
-    TOPIC_ENVIRONMENT = "environment"
+    TOPIC_BIOMETRIC_SIM = "sim/biometric"
+    TOPIC_ENVIRONMENT_SIM = "sim/environment"
     TOPIC_LIGHT = "light"
     TOPIC_PEOPLE = "people"
-    TOPIC_DOOR = "door"
+    TOPIC_PEOPLE_SIM = "sim/people"
+    TOPIC_DOOR_SIM = "sim/door"

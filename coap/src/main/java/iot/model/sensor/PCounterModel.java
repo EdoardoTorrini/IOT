@@ -5,7 +5,7 @@ import iot.model.BaseModel;
 public class PCounterModel extends BaseModel {
     private int peopleIn;
 
-    public PCounterModel(String id) { super(""); }
+    public PCounterModel() { super(""); }
 
     public PCounterModel(String id, int peopleIn) {
         super(id);

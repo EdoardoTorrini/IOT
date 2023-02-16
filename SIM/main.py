@@ -11,6 +11,7 @@ def main():
     ENVIRONMENTAL, E_DATA = "value/environmental/standard.json", None
     SMART_DOOR, SD_DATA = "value/smart_door/random_data.json", None
     BIOMETRIC, B_DATA = "value/biometric_check.json", None
+    PCOUNTER, PC_DATA = "value/people/data.json", None
     TOPIC = {}
 
     if path.exists(ENVIRONMENTAL):
@@ -25,9 +26,14 @@ def main():
         with open(BIOMETRIC, "r+") as f:
             B_DATA = f.read()
 
-    TOPIC[MQTTConfParam.TOPIC_ENVIRONMENT] = Publisher(MQTTConfParam.TOPIC_ENVIRONMENT, E_DATA, EnvironmentalMonitoring)
-    TOPIC[MQTTConfParam.TOPIC_DOOR] = Publisher(MQTTConfParam.TOPIC_DOOR, SD_DATA, SmartDoor)
-    TOPIC[MQTTConfParam.TOPIC_BIOMETRIC] = Publisher(MQTTConfParam.TOPIC_BIOMETRIC, B_DATA, BiometricSensor, duty_cycle=300)
+    if path.exists(PCOUNTER):
+        with open(PCOUNTER, "r+") as f:
+            PC_DATA = f.read()
+
+    TOPIC[MQTTConfParam.TOPIC_ENVIRONMENT_SIM] = Publisher(MQTTConfParam.TOPIC_ENVIRONMENT_SIM, E_DATA, EnvironmentalMonitoring)
+    TOPIC[MQTTConfParam.TOPIC_DOOR_SIM] = Publisher(MQTTConfParam.TOPIC_DOOR_SIM, SD_DATA, SmartDoor)
+    TOPIC[MQTTConfParam.TOPIC_PEOPLE_SIM] = Publisher(MQTTConfParam.TOPIC_PEOPLE_SIM, PC_DATA, PeopleCounter)
+    TOPIC[MQTTConfParam.TOPIC_BIOMETRIC_SIM] = Publisher(MQTTConfParam.TOPIC_BIOMETRIC_SIM, B_DATA, BiometricSensor, duty_cycle=300)
 
     for topic, obj in TOPIC.items():
         if isinstance(obj, Publisher):
