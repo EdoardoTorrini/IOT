@@ -9,3 +9,9 @@
 /gui/package.json
 /SIM/.idea
 /DataCenter/src/test
+*.class
+/SIM/model/__pycache__/*
+/SIM/views/__pycache__/*
+/SIM/process/__pycache__/*
+/SIM/__pycache__/*
+/coap/target/*

@@ -29,7 +29,7 @@ public class EnvironmentalPublisher extends ThreadManager {
                     msg.setRetained(false);
                     this.client.publish(this.topic, msg);
 
-                    logger.info("[ MESSAGE ]: {}, [ TOPIC ]: {}", payload, this.topic);
+                    logger.info("[ ENVIRONMENTAL ] -> [ MESSAGE ]: {}, [ TOPIC ]: {}", payload, this.topic);
                 } else
                     logger.error("[ TOPIC ]: {}, [ PAYLOAD ]: {}, [ is CONNECT ]: {}", this.topic, payload, this.client.isConnected());
 

@@ -1,10 +1,15 @@
 from http.client import NO_CONTENT, BAD_REQUEST, INTERNAL_SERVER_ERROR
+from configuration.mqtt_config_param import MQTTConfParam
+from process import Publisher
 
 from flask import request
 from flask_classful import FlaskView
+from server import TOPIC
 
 
 class SmartDoorView(FlaskView):
+
+    __topic__ = MQTTConfParam.TOPIC_DOOR_SIM
 
     def post(self):
 
@@ -14,13 +19,19 @@ class SmartDoorView(FlaskView):
             match data.get("type"):
 
                 case "accelleration":
-                    pass
+                    PATH = "value/smart_door/accelleration.json"
+                    if isinstance(TOPIC[self.__topic__], Publisher):
+                        TOPIC[self.__topic__].change_file(PATH)
 
                 case "forcing":
-                    pass
+                    PATH = "value/smart_door/forcing.json"
+                    if isinstance(TOPIC[self.__topic__], Publisher):
+                        TOPIC[self.__topic__].change_file(PATH)
 
                 case "random_data":
-                    pass
+                    PATH = "value/smart_door/random_data.json"
+                    if isinstance(TOPIC[self.__topic__], Publisher):
+                        TOPIC[self.__topic__].change_file(PATH)
 
                 case _:
                     return {

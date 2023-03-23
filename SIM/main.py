@@ -3,42 +3,52 @@ from model import BiometricSensor, LightController, PeopleCounter
 from process import Publisher
 from configuration.mqtt_config_param import MQTTConfParam
 
+from server import TOPIC
+from flask import Flask
+from views.environmental import EnvironmentView
+from views.smart_door import SmartDoorView
+
 from os import path
 
+sIp, nPort = "0.0.0.0", 8000
+app = Flask(__name__)
+EnvironmentView.register(app, route_base="/environment")
+SmartDoorView.register(app, route_base="/smart_door")
 
-def main():
+ENVIRONMENTAL = "value/environmental/standard.json"
+SMART_DOOR = "value/smart_door/random_data.json"
+BIOMETRIC = "value/biometric_check.json"
+PCOUNTER = "value/people/data.json"
 
-    ENVIRONMENTAL, E_DATA = "value/environmental/standard.json", None
-    SMART_DOOR, SD_DATA = "value/smart_door/random_data.json", None
-    BIOMETRIC, B_DATA = "value/biometric_check.json", None
-    PCOUNTER, PC_DATA = "value/people/data.json", None
-    TOPIC = {}
 
-    if path.exists(ENVIRONMENTAL):
-        with open(ENVIRONMENTAL, "r+") as f:
-            E_DATA = f.read()
+TOPIC[MQTTConfParam.TOPIC_ENVIRONMENT_SIM] = Publisher(MQTTConfParam.TOPIC_ENVIRONMENT_SIM, ENVIRONMENTAL, EnvironmentalMonitoring)
+TOPIC[MQTTConfParam.TOPIC_DOOR_SIM] = Publisher(MQTTConfParam.TOPIC_DOOR_SIM, SMART_DOOR, SmartDoor)
+TOPIC[MQTTConfParam.TOPIC_PEOPLE_SIM] = Publisher(MQTTConfParam.TOPIC_PEOPLE_SIM, PCOUNTER, PeopleCounter)
+TOPIC[MQTTConfParam.TOPIC_BIOMETRIC_SIM] = Publisher(MQTTConfParam.TOPIC_BIOMETRIC_SIM, BIOMETRIC, BiometricSensor, duty_cycle=300)
 
-    if path.exists(SMART_DOOR):
-        with open(SMART_DOOR, "r+") as f:
-            SD_DATA = f.read()
-
-    if path.exists(BIOMETRIC):
-        with open(BIOMETRIC, "r+") as f:
-            B_DATA = f.read()
-
-    if path.exists(PCOUNTER):
-        with open(PCOUNTER, "r+") as f:
-            PC_DATA = f.read()
-
-    TOPIC[MQTTConfParam.TOPIC_ENVIRONMENT_SIM] = Publisher(MQTTConfParam.TOPIC_ENVIRONMENT_SIM, E_DATA, EnvironmentalMonitoring)
-    TOPIC[MQTTConfParam.TOPIC_DOOR_SIM] = Publisher(MQTTConfParam.TOPIC_DOOR_SIM, SD_DATA, SmartDoor)
-    TOPIC[MQTTConfParam.TOPIC_PEOPLE_SIM] = Publisher(MQTTConfParam.TOPIC_PEOPLE_SIM, PC_DATA, PeopleCounter)
-    TOPIC[MQTTConfParam.TOPIC_BIOMETRIC_SIM] = Publisher(MQTTConfParam.TOPIC_BIOMETRIC_SIM, B_DATA, BiometricSensor, duty_cycle=300)
-
+try:
+    # starting simulation
     for topic, obj in TOPIC.items():
         if isinstance(obj, Publisher):
             obj.start()
 
+    # starting web server
+    print(f"Starting Server on [ IP ]: {sIp} and [ PORT ]: {nPort}")
+    app.run(sIp, nPort)
+    
 
-if __name__ == "__main__":
-    main()
+except KeyboardInterrupt:
+    print(f"STOP Publisher")
+    for topc, obj in TOPIC.items():
+        if isinstance(obj, Publisher):
+            obj.set_stop()
+            obj.join()
+
+except Exception as eErr:
+    print(f"[ FAIL Publisher ] -> [ ERROR ]: {eErr}")
+    for topc, obj in TOPIC.items():
+        if isinstance(obj, Publisher):
+            obj.set_stop()
+            obj.join()
+
+    

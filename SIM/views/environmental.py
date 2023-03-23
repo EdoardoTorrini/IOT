@@ -1,10 +1,15 @@
 from http.client import NO_CONTENT, BAD_REQUEST, INTERNAL_SERVER_ERROR
+from configuration.mqtt_config_param import MQTTConfParam
+from process import Publisher
 
 from flask import request
 from flask_classful import FlaskView
+from server import TOPIC
 
 
 class EnvironmentView(FlaskView):
+
+    __topic__ = MQTTConfParam.TOPIC_ENVIRONMENT_SIM
 
     def post(self):
 
@@ -14,13 +19,19 @@ class EnvironmentView(FlaskView):
             match data.get("type"):
 
                 case "fire":
-                    pass
+                    PATH = "value/environmental/fire.json"
+                    if isinstance(TOPIC[self.__topic__], Publisher):
+                        TOPIC[self.__topic__].change_file(PATH)
 
                 case "flooding":
-                    pass
+                    PATH = "value/environmental/flooding.json"
+                    if isinstance(TOPIC[self.__topic__], Publisher):
+                        TOPIC[self.__topic__].change_file(PATH)
 
                 case "standard":
-                    pass
+                    PATH = "value/environmental/standard.json"
+                    if isinstance(TOPIC[self.__topic__], Publisher):
+                        TOPIC[self.__topic__].change_file(PATH)
 
                 case _:
                     return {
