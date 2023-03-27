@@ -1,16 +1,16 @@
 package iot.mqtt.process;
 
-import iot.model.sensor.EnvironmentalModel;
+import iot.model.sensor.BiometricModel;
 import iot.mqtt.ThreadManager;
 import iot.mqtt.persistance.GenericManager;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-public class EnvironmentalPublisher extends ThreadManager {
-    private final GenericManager<EnvironmentalModel> genericManager;
+public class BiometricPublisher extends ThreadManager {
+    private final GenericManager<BiometricModel> genericManager;
     private boolean bStop = false;
 
-    public EnvironmentalPublisher(String topic, GenericManager<EnvironmentalModel> genericManager) throws MqttException {
+    public BiometricPublisher(String topic, GenericManager<BiometricModel> genericManager) throws MqttException{
         super(topic);
         this.genericManager = genericManager;
     }
@@ -30,8 +30,8 @@ public class EnvironmentalPublisher extends ThreadManager {
                     this.client.publish(this.topic, msg);
 
                     logger.info("[ ENVIRONMENTAL ] -> [ MESSAGE ]: {}, [ TOPIC ]: {}", payload, this.topic);
-                } 
-                else
+                }
+                else 
                     logger.error("[ TOPIC ]: {}, [ PAYLOAD ]: {}, [ is CONNECT ]: {}", this.topic, payload, this.client.isConnected());
 
                 Thread.sleep(10000);
@@ -45,7 +45,8 @@ public class EnvironmentalPublisher extends ThreadManager {
         }
     }
 
-    public GenericManager<EnvironmentalModel> getGenericManager() { return this.genericManager; }
+    public GenericManager<BiometricModel> getGenericManager() { return this.genericManager; }
 
     public void setStop(boolean bStop) { this.bStop = bStop; }
+
 }

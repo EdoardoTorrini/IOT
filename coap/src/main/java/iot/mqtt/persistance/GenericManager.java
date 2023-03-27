@@ -16,7 +16,8 @@ public class GenericManager<TYPE> extends ThreadManager {
 
     public GenericManager(String topic, Class<?> classOfT)
             throws MqttException, NoSuchMethodException, InvocationTargetException,
-            InstantiationException, IllegalAccessException {
+            InstantiationException, IllegalAccessException 
+    {
 
         super(topic);
 

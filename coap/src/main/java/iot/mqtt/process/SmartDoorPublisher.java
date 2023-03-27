@@ -1,16 +1,17 @@
 package iot.mqtt.process;
 
-import iot.model.sensor.EnvironmentalModel;
-import iot.mqtt.ThreadManager;
-import iot.mqtt.persistance.GenericManager;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-public class EnvironmentalPublisher extends ThreadManager {
-    private final GenericManager<EnvironmentalModel> genericManager;
-    private boolean bStop = false;
+import iot.model.actuator.SmartDoorModel;
+import iot.mqtt.ThreadManager;
+import iot.mqtt.persistance.GenericManager;
 
-    public EnvironmentalPublisher(String topic, GenericManager<EnvironmentalModel> genericManager) throws MqttException {
+public class SmartDoorPublisher extends ThreadManager {
+    private final GenericManager<SmartDoorModel> genericManager;
+    private boolean bStop = true;
+
+    public SmartDoorPublisher(String topic, GenericManager<SmartDoorModel> genericManager) throws MqttException {
         super(topic);
         this.genericManager = genericManager;
     }
@@ -18,7 +19,6 @@ public class EnvironmentalPublisher extends ThreadManager {
     @Override
     public void run() {
         try {
-
             while (!this.bStop) {
                 String payload = this.gson.toJson(this.genericManager.getObj());
 
@@ -29,11 +29,11 @@ public class EnvironmentalPublisher extends ThreadManager {
                     msg.setRetained(false);
                     this.client.publish(this.topic, msg);
 
-                    logger.info("[ ENVIRONMENTAL ] -> [ MESSAGE ]: {}, [ TOPIC ]: {}", payload, this.topic);
-                } 
+                    logger.info("[ SMART DOOR ] -> [ MESSAGE ]: {}, [ TOPIC ]: {}", payload, this.topic);
+                }
                 else
-                    logger.error("[ TOPIC ]: {}, [ PAYLOAD ]: {}, [ is CONNECT ]: {}", this.topic, payload, this.client.isConnected());
-
+                    logger.error("[ TOPIC ]: {}, [ PAYLOAD ]: {}, [ is CONNECTED ]: {}", this.topic, payload, this.client.isConnected());
+                
                 Thread.sleep(10000);
             }
         }
@@ -44,8 +44,8 @@ public class EnvironmentalPublisher extends ThreadManager {
             logger.error("[ MESSAGE ]: {}", eErr.getMessage());
         }
     }
-
-    public GenericManager<EnvironmentalModel> getGenericManager() { return this.genericManager; }
+    
+    public GenericManager<SmartDoorModel> getGenericManager() { return this.genericManager; }
 
     public void setStop(boolean bStop) { this.bStop = bStop; }
 }

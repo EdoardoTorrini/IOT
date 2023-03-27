@@ -9,6 +9,7 @@ public class MqttConfigurationParameters {
 
     public static final String TOPIC_ALARM = "alarm";
     public static final String TOPIC_BIOMETRIC = "biometric";
+    public static final String TOPIC_BIOMETRIC_SIM = "sim/biometric";
     public static final String TOPIC_ENVIRONMENT_SIM = "sim/environment";
     public static final String TOPIC_ENVIRONMENT = "environment";
     public static final String TOPIC_LIGHT = "light";
