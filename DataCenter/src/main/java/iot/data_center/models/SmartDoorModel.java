@@ -1,6 +1,5 @@
 package iot.data_center.models;
 
-
 import iot.data_center.models.base.Base;
 
 public class SmartDoorModel extends Base {
