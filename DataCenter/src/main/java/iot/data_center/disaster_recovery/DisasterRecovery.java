@@ -12,11 +12,6 @@ public class DisasterRecovery extends Thread {
 
     private int nLevel;
 
-    public static final int OFF = -1;
-    public static final int LOW = 0;
-    public static final int MEDIUM = 1;
-    public static final int HIGH = 2;
-
     private boolean bStop = false;
 
     private ReadingEnvironmetal readingEnvironmetal;
@@ -56,6 +51,9 @@ public class DisasterRecovery extends Thread {
             }
         }
     }
+
+    
+
 
     public void setStop() { this.bStop = true; }
 }

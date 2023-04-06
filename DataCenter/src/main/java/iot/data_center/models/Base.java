@@ -1,4 +1,4 @@
-package iot.data_center.models.base;
+package iot.data_center.models;
 
 public class Base {
     protected String id;

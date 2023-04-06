@@ -1,6 +1,7 @@
 package iot.coap.server;
 
 import iot.coap.resource.AlarmResource;
+import iot.coap.resource.ConditionerResource;
 import iot.coap.resource.LightResource;
 import iot.coap.resource.SmartDoorResource;
 import iot.configuration.MqttConfigurationParameters;
@@ -78,6 +79,7 @@ public class IDSCoapProcess extends CoapServer {
         this.add(new SmartDoorResource(MqttConfigurationParameters.TOPIC_DOOR));
         this.add(new AlarmResource(MqttConfigurationParameters.TOPIC_ALARM));
         this.add(new LightResource(MqttConfigurationParameters.TOPIC_LIGHT));
+        this.add(new ConditionerResource(MqttConfigurationParameters.TOPIC_CONDITIONER));
     }
 
     public static void main(String[] args) {

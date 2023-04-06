@@ -7,7 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import iot.configuration.MqttConfigurationParameters;
-import iot.data_center.models.EnvironmentalModel;
+import iot.data_center.models.actuator.ConditionerModel;
+import iot.data_center.models.sensor.EnvironmentalModel;
 import iot.mqtt.persistance.GenericManager;
 
 public class ReadingEnvironmetal extends Thread {
@@ -21,7 +22,7 @@ public class ReadingEnvironmetal extends Thread {
     private boolean bFlooding = false;
     private boolean bFire = false;
     private boolean bNormal = false;
-    private int nLevel = DisasterRecovery.OFF;
+    private int nLevel = ConditionerModel.OFF;
 
     private boolean bStop = false;
 
@@ -69,14 +70,14 @@ public class ReadingEnvironmetal extends Thread {
                 this.environmentalModel.getTemperature() <= 40
             ) {
                 if (this.environmentalModel.getTemperature() <= 30)
-                    this.nLevel = DisasterRecovery.LOW;
+                    this.nLevel = ConditionerModel.LOW;
                 else if (this.environmentalModel.getTemperature() <= 35)
-                    this.nLevel = DisasterRecovery.MEDIUM;
+                    this.nLevel = ConditionerModel.MEDIUM;
                 else
-                    this.nLevel = DisasterRecovery.HIGH;
+                    this.nLevel = ConditionerModel.HIGH;
             }
             else
-                this.nLevel = DisasterRecovery.OFF;
+                this.nLevel = ConditionerModel.OFF;
             
             // check if nothig is high for deactive everything 
             if ((!this.bDehumidifier) && (!this.bFlooding) && (!this.bFire) && (this.nLevel < 0))

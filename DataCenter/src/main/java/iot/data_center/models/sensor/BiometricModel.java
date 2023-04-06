@@ -1,8 +1,9 @@
-package iot.data_center.models;
+package iot.data_center.models.sensor;
 
-import iot.data_center.models.base.Base;
+import iot.data_center.models.Base;
 
 public class BiometricModel extends Base {
+    
     private String token;
 
     public BiometricModel() { super(""); }

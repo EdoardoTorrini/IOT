@@ -14,3 +14,4 @@
 /SIM/process/__pycache__/*
 /SIM/__pycache__/*
 /coap/target/*
+*.class

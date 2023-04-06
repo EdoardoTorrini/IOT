@@ -1,28 +1,28 @@
-package iot.data_center.models;
+package iot.data_center.models.actuator;
 
-import iot.data_center.models.base.Base;
+import iot.data_center.models.Base;
 
 public class SmartDoorModel extends Base {
 
     // when the door is lock it couldn't be open, instead when the door is unlocked it could be open or not
     private boolean lock;
     private boolean open;
-    private double accelleration;
+    private double acceleration;
 
     public SmartDoorModel() { super(""); }
 
-    public SmartDoorModel(String id, boolean lock, boolean open, double accelleration) {
+    public SmartDoorModel(String id, boolean lock, boolean open, double acceleration) {
         super(id);
         this.lock = lock;
         this.open = open;
-        this.accelleration = accelleration;
+        this.acceleration = acceleration;
     }
 
-    public SmartDoorModel(String id, double data, boolean lock, boolean open, double accelleration) {
+    public SmartDoorModel(String id, double data, boolean lock, boolean open, double acceleration) {
         super(id, data);
         this.lock = lock;
         this.open = open;
-        this.accelleration = accelleration;
+        this.acceleration = acceleration;
     }
 
     public boolean isLock() { return lock; }
@@ -33,15 +33,15 @@ public class SmartDoorModel extends Base {
 
     public void setOpen(boolean open) { this.open = open; }
 
-    public double getAccelleration() { return accelleration; }
+    public double getAcceleration() { return acceleration; }
 
-    public void setAccelleration(double accelleration) { this.accelleration = accelleration; }
+    public void setAcceleration(double acceleration) { this.acceleration = acceleration; }
 
     @Override
     public String toString() {
         String sRet = String.format(
             "[ SMART DOOR ] -> [ ID ]: %s, [ is LOCK ]: %b, [ is OPEN ]: %b, [ ACCELERATION ]: %f, [ TIME ]: %f",
-            this.id, this.lock, this.open, this.accelleration, this.data
+            this.id, this.lock, this.open, this.acceleration, this.data
         );
         return sRet;
     }

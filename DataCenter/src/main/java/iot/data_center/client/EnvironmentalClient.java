@@ -1,7 +1,9 @@
 package iot.data_center.client;
 
 import com.google.gson.Gson;
-import iot.data_center.models.EnvironmentalModel;
+
+import iot.data_center.models.sensor.EnvironmentalModel;
+
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapHandler;
 import org.eclipse.californium.core.CoapObserveRelation;
