@@ -10,7 +10,7 @@ public class ConditionerManager {
 
     public ConditionerManager() {
         // manage the simulation
-        this.conditionerModel = new ConditionerModel("conditioner-model.01", false, ConditionerModel.OFF);
+        this.conditionerModel = new ConditionerModel("conditioner.model.01", false, ConditionerModel.OFF);
     }
 
     public ConditionerModel getConditionerModel() { return this.conditionerModel; }

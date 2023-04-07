@@ -22,7 +22,7 @@ public class ConditionerResource extends CoapResource {
 
     public ConditionerResource(String name) {
         super(name);
-
+        this.conditionerManager = new ConditionerManager();
         this.init();
     }
 
@@ -55,9 +55,10 @@ public class ConditionerResource extends CoapResource {
     public void handlePOST(CoapExchange exchange) {
         try {
             int nLevel = this.conditionerManager.getConditionerModel().getLevelAirConditioning();
-            this.conditionerManager.getConditionerModel().setLevelAirConditioning((nLevel + 1) % ConditionerModel.HIGH);
+            int nNewLevel = (nLevel + 1) % (ConditionerModel.HIGH + 1);
+            this.conditionerManager.getConditionerModel().setLevelAirConditioning(nNewLevel);
 
-            logger.warn("[ CONDITIONER RESOURCE ] -> [ new LEVEL ]: {}", ((nLevel + 1) % ConditionerModel.HIGH));
+            logger.warn("[ CONDITIONER RESOURCE ] -> [ new LEVEL ]: {}", nNewLevel);
             exchange.respond(CoAP.ResponseCode.CHANGED);
         }
         catch (Exception eErr) {
@@ -84,7 +85,7 @@ public class ConditionerResource extends CoapResource {
                     logger.info("[ CONDITIONER REOURCE ] -> change [ LEVEL AIR CONDITIONING ]: {}", cm.getLevelAirConditioning());
                 }
                 
-                exchange.respond(CoAP.ResponseCode.CHANGED);
+                exchange.respond(CoAP.ResponseCode.CHANGED, new String(this.gson.toJson(this.conditionerManager.getConditionerModel())), exchange.getRequestOptions().getAccept());
             }
             else
                 exchange.respond(CoAP.ResponseCode.BAD_REQUEST);

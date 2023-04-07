@@ -67,15 +67,12 @@ public class ReadingEnvironmetal extends Thread {
                 this.bFire = false;
             
             // check the temperature
-            if (
-                this.environmentalModel.getTemperature() >= 25 &&
-                this.environmentalModel.getTemperature() <= 40
-            ) {
+            if (this.environmentalModel.getTemperature() >= 25) {
                 if (this.environmentalModel.getTemperature() <= 30)
                     this.nLevel = ConditionerModel.LOW;
                 else if (this.environmentalModel.getTemperature() <= 35)
                     this.nLevel = ConditionerModel.MEDIUM;
-                else
+                else 
                     this.nLevel = ConditionerModel.HIGH;
             }
             else
@@ -86,12 +83,12 @@ public class ReadingEnvironmetal extends Thread {
                 this.bNormal = true;
             else
                 this.bNormal = false;
+
             
             try {
-                TimeUnit.MINUTES.sleep(1);
+                TimeUnit.SECONDS.sleep(20);
             } 
             catch (InterruptedException e) {
-                
                 e.printStackTrace();
             }
         }
@@ -104,4 +101,6 @@ public class ReadingEnvironmetal extends Thread {
 
     public int getLevel() { return this.nLevel; }
     public void setStop() { this.bStop = true; }
+
+    public EnvironmentalModel getEnvModel() { return this.environmentalModel; }
 }

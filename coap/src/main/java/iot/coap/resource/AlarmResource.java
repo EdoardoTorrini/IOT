@@ -22,6 +22,7 @@ public class AlarmResource extends CoapResource {
 
     public AlarmResource(String name) {
         super(name);
+        this.alarmManager = new AlarmManager();
 
         this.init();
     }
@@ -59,7 +60,7 @@ public class AlarmResource extends CoapResource {
             this.alarmManager.getSwitchModel().setOn(!bStatus);
 
             logger.warn("[ ALARM RESOURCE ] -> [ STATUS ]: {}", !bStatus);
-            exchange.respond(CoAP.ResponseCode.CHANGED);
+            exchange.respond(CoAP.ResponseCode.CHANGED, new String(this.gson.toJson(this.alarmManager.getSwitchModel())), exchange.getRequestOptions().getAccept());
         }
         catch (Exception eErr) {
             logger.error("[ ALARM RESOURCE ] -> [ MESSAGE ]", eErr.getMessage());

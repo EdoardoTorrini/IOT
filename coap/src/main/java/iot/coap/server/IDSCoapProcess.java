@@ -55,30 +55,30 @@ public class IDSCoapProcess extends CoapServer {
         this.environmentalPublisher.start();
         
         /* People Counter Model Task */
-        // this.managerPCounter = new GenericManager<>(MqttConfigurationParameters.TOPIC_PEOPLE_SIM, PCounterModel.class);
-        // this.managerPCounter.start();
+        this.managerPCounter = new GenericManager<>(MqttConfigurationParameters.TOPIC_PEOPLE_SIM, PCounterModel.class);
+        this.managerPCounter.start();
 
-        // this.pCounterPublisher = new PCounterPublisher(MqttConfigurationParameters.TOPIC_PEOPLE, this.managerPCounter);
-        // this.pCounterPublisher.start();
+        this.pCounterPublisher = new PCounterPublisher(MqttConfigurationParameters.TOPIC_PEOPLE, this.managerPCounter);
+        this.pCounterPublisher.start();
 
         /* Smart Door Model Task */
-        // this.managerSmartDoor = new GenericManager<>(MqttConfigurationParameters.TOPIC_DOOR_SIM, SmartDoorModel.class);
-        // this.managerSmartDoor.start();
+        this.managerSmartDoor = new GenericManager<>(MqttConfigurationParameters.TOPIC_DOOR_SIM, SmartDoorModel.class);
+        this.managerSmartDoor.start();
 
-        // this.smartDoorPublisher = new SmartDoorPublisher(MqttConfigurationParameters.TOPIC_DOOR, this.managerSmartDoor);
-        // this.smartDoorPublisher.start();
+        this.smartDoorPublisher = new SmartDoorPublisher(MqttConfigurationParameters.TOPIC_DOOR, this.managerSmartDoor);
+        this.smartDoorPublisher.start();
 
         /* Biometric Model Task */
-        // this.managerBiometric = new GenericManager<>(MqttConfigurationParameters.TOPIC_BIOMETRIC_SIM, BiometricModel.class);
-        // this.managerBiometric.start();
+        this.managerBiometric = new GenericManager<>(MqttConfigurationParameters.TOPIC_BIOMETRIC_SIM, BiometricModel.class);
+        this.managerBiometric.start();
 
-        // this.biometricPublisher = new BiometricPublisher(MqttConfigurationParameters.TOPIC_BIOMETRIC, this.managerBiometric);
-        // this.biometricPublisher.start();
+        this.biometricPublisher = new BiometricPublisher(MqttConfigurationParameters.TOPIC_BIOMETRIC, this.managerBiometric);
+        this.biometricPublisher.start();
 
 
-        // this.add(new SmartDoorResource(MqttConfigurationParameters.TOPIC_DOOR));
-        // this.add(new AlarmResource(MqttConfigurationParameters.TOPIC_ALARM));
-        // this.add(new LightResource(MqttConfigurationParameters.TOPIC_LIGHT));
+        this.add(new SmartDoorResource(MqttConfigurationParameters.TOPIC_DOOR));
+        this.add(new AlarmResource(MqttConfigurationParameters.TOPIC_ALARM));
+        this.add(new LightResource(MqttConfigurationParameters.TOPIC_LIGHT));
         this.add(new ConditionerResource(MqttConfigurationParameters.TOPIC_CONDITIONER));
     }
 
