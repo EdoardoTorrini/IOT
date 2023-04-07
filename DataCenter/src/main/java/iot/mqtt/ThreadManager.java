@@ -23,21 +23,26 @@ public class ThreadManager extends Thread {
     }
 
     private void init() throws MqttException {
-        String clientID = UUID.randomUUID().toString();
-        MqttClientPersistence persistence = new MemoryPersistence();
+        try {
+            String clientID = UUID.randomUUID().toString();
+            MqttClientPersistence persistence = new MemoryPersistence();
 
-        this.client = new MqttClient(
-                String.format("tcp://%s:%d", MqttConfigurationParameters.BROKER_ADDRESS, MqttConfigurationParameters.BROKER_PORT),
-                clientID, persistence
-        );
+            this.client = new MqttClient(
+                    String.format("tcp://%s:%d", MqttConfigurationParameters.BROKER_ADDRESS, MqttConfigurationParameters.BROKER_PORT),
+                    clientID, persistence
+            );
 
-        MqttConnectOptions options = new MqttConnectOptions();
-        options.setUserName(MqttConfigurationParameters.MQTT_USERNAME);
-        options.setPassword(MqttConfigurationParameters.MQTT_PASSWORD.toCharArray());
-        options.setAutomaticReconnect(true);
-        options.setCleanSession(true);
-        options.setConnectionTimeout(10);
+            MqttConnectOptions options = new MqttConnectOptions();
+            options.setUserName(MqttConfigurationParameters.MQTT_USERNAME);
+            options.setPassword(MqttConfigurationParameters.MQTT_PASSWORD.toCharArray());
+            options.setAutomaticReconnect(true);
+            options.setCleanSession(true);
+            options.setConnectionTimeout(10);
 
-        this.client.connect(options);
+            this.client.connect(options);
+        }
+        catch (Exception eErr) {
+            logger.error(eErr.getMessage());
+        }
     }
 }

@@ -14,4 +14,5 @@ public class MqttConfigurationParameters {
     public static final String TOPIC_PEOPLE = "people";
     public static final String TOPIC_PEOPLE_SIM = "sim/people";
     public static final String TOPIC_DOOR = "door";
+    public static final String TOPIC_CONDITIONER = "conditioner";
 }

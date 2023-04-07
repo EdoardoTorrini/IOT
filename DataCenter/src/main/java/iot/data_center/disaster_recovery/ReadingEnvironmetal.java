@@ -1,6 +1,7 @@
 package iot.data_center.disaster_recovery;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.TimeUnit;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ public class ReadingEnvironmetal extends Thread {
     NoSuchMethodException, InstantiationException, IllegalAccessException
     {
         this.managerEnv = new GenericManager<>(MqttConfigurationParameters.TOPIC_ENVIRONMENT, EnvironmentalModel.class);
+        this.managerEnv.start();
         this.environmentalModel = new EnvironmentalModel();
     }
 
@@ -38,7 +40,7 @@ public class ReadingEnvironmetal extends Thread {
         while (!this.bStop)
         {
             this.environmentalModel = this.managerEnv.getObj();
-            logger.info("[ MESSAGE RECEIVED ], {}", this.environmentalModel.toString());
+            // logger.info("[ MESSAGE RECEIVED ], {}", this.environmentalModel.toString());
             
             // check if the humidity is too high
             if (
@@ -85,6 +87,13 @@ public class ReadingEnvironmetal extends Thread {
             else
                 this.bNormal = false;
             
+            try {
+                TimeUnit.MINUTES.sleep(1);
+            } 
+            catch (InterruptedException e) {
+                
+                e.printStackTrace();
+            }
         }
     }
 

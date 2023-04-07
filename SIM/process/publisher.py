@@ -17,7 +17,7 @@ class PubState(Enum):
 
 class Publisher(Thread):
     
-    def __init__(self, sTopic, sPath, obj=None, duty_cycle=10):
+    def __init__(self, sTopic, sPath, obj=None, duty_cycle=60):
 
         super(Publisher, self).__init__()
         self.sTopic = sTopic

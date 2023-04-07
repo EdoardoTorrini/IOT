@@ -22,7 +22,7 @@ public class MessageGUIModel {
 
     private Vector<String> message;
 
-    public MessageGUIModel() {}
+    public MessageGUIModel() { this.message = new Vector<String>(); }
 
     public MessageGUIModel(
         ConditionerModel conditionerModel, SmartDoorModel smartDoorModel, SwitchModel lightModel, SwitchModel alarmModel,
