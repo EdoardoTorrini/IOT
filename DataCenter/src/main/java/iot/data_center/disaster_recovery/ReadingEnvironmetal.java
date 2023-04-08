@@ -1,11 +1,7 @@
 package iot.data_center.disaster_recovery;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.concurrent.TimeUnit;
-
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import iot.configuration.MqttConfigurationParameters;
 import iot.data_center.models.actuator.ConditionerModel;
@@ -13,8 +9,6 @@ import iot.data_center.models.sensor.EnvironmentalModel;
 import iot.mqtt.persistance.GenericManager;
 
 public class ReadingEnvironmetal extends Thread {
-    
-    private final static Logger logger = LoggerFactory.getLogger(ReadingEnvironmetal.class);
     
     private EnvironmentalModel environmentalModel;
     private GenericManager<EnvironmentalModel> managerEnv;
@@ -83,14 +77,6 @@ public class ReadingEnvironmetal extends Thread {
                 this.bNormal = true;
             else
                 this.bNormal = false;
-
-            
-            try {
-                TimeUnit.SECONDS.sleep(20);
-            } 
-            catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
     }
 

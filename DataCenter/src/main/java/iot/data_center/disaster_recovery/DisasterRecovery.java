@@ -17,8 +17,10 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 
 import iot.configuration.MqttConfigurationParameters;
+import iot.data_center.client.GeneralClient;
 import iot.data_center.models.actuator.ConditionerModel;
 import iot.data_center.models.actuator.SwitchModel;
+import iot.data_center.models.sensor.EnvironmentalModel;
 import iot.data_center.persistance.MessageGUIManager;
 
 public class DisasterRecovery extends Thread {
@@ -54,6 +56,10 @@ public class DisasterRecovery extends Thread {
 
     @Override
     public void run() {
+
+        this.refreshAlarmModel();
+        this.refreshConditionerModel();
+
         while (!this.bStop)
         {
             if (!this.readingEnvironmetal.isNormal()) {
@@ -84,7 +90,7 @@ public class DisasterRecovery extends Thread {
             this.refreshAlarmModel();
 
             try {
-                TimeUnit.SECONDS.sleep(23);
+                TimeUnit.SECONDS.sleep(60);
             } 
             catch (InterruptedException e) {
                 e.printStackTrace();
@@ -153,27 +159,23 @@ public class DisasterRecovery extends Thread {
     }
 
     private void refreshAlarmModel() {
-
         try {
-            CoapClient client = new CoapClient(
-                String.format(
-                    "coap://127.0.0.1:5683/%s",
-                    MqttConfigurationParameters.TOPIC_ALARM
-                )
-            );
-
-            Request request = new Request(Code.GET);
-            request.setConfirmable(true);
-
-            // vediamo come va questo tipo di richiesta
-            CoapResponse response = client.advanced(request);
-
-            this.msgManager.getMsgGUIModel().setAlarmObj(this.gson.fromJson(new String(response.getPayload()), SwitchModel.class));
+            
+            GeneralClient<SwitchModel> client = new GeneralClient<>(MqttConfigurationParameters.TOPIC_ALARM, SwitchModel.class);
+            this.msgManager.getMsgGUIModel().setAlarmObj(client.getIstance());
 
         }
-        catch (ConnectorException | IOException eErr) {
-            logger.error("[ DISASTER RECOVERY ] -> error on: [ get ALARM ]: {}", eErr.getMessage());
+        catch(Exception e) {}
+    }
+
+    private void refreshConditionerModel() {
+        try {
+            
+            GeneralClient<ConditionerModel> client = new GeneralClient<>(MqttConfigurationParameters.TOPIC_CONDITIONER, ConditionerModel.class);
+            this.msgManager.getMsgGUIModel().setConditioningObj(client.getIstance());
+
         }
+        catch(Exception e) {}
     }
 
     public void setStop() { this.bStop = true; }

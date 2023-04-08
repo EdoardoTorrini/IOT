@@ -43,7 +43,8 @@ public class IDSCoapProcess extends CoapServer {
     private BiometricPublisher biometricPublisher;
 
     public IDSCoapProcess() throws MqttException, InvocationTargetException,
-            NoSuchMethodException, InstantiationException, IllegalAccessException {
+            NoSuchMethodException, InstantiationException, IllegalAccessException 
+    {
 
         super();
         

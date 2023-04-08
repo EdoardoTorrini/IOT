@@ -14,5 +14,5 @@
 /SIM/process/__pycache__/*
 /SIM/__pycache__/*
 /coap/target/*
+/DataCenter/logs/*
 *.class
-*.log
