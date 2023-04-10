@@ -22,7 +22,7 @@ public class ReadingEnvironmetal extends Thread {
     private boolean bStop = false;
 
     public ReadingEnvironmetal() throws MqttException, InvocationTargetException,
-    NoSuchMethodException, InstantiationException, IllegalAccessException
+        NoSuchMethodException, InstantiationException, IllegalAccessException
     {
         this.managerEnv = new GenericManager<>(MqttConfigurationParameters.TOPIC_ENVIRONMENT, EnvironmentalModel.class);
         this.managerEnv.start();

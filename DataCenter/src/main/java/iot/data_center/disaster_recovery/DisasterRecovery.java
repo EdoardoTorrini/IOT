@@ -20,7 +20,6 @@ import iot.configuration.MqttConfigurationParameters;
 import iot.data_center.client.GeneralClient;
 import iot.data_center.models.actuator.ConditionerModel;
 import iot.data_center.models.actuator.SwitchModel;
-import iot.data_center.models.sensor.EnvironmentalModel;
 import iot.data_center.persistance.MessageGUIManager;
 
 public class DisasterRecovery extends Thread {
@@ -92,9 +91,7 @@ public class DisasterRecovery extends Thread {
             try {
                 TimeUnit.SECONDS.sleep(60);
             } 
-            catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            catch (InterruptedException e) {}
         }
     }
 
@@ -165,7 +162,7 @@ public class DisasterRecovery extends Thread {
             this.msgManager.getMsgGUIModel().setAlarmObj(client.getIstance());
 
         }
-        catch(Exception e) {}
+        catch (Exception e) {}
     }
 
     private void refreshConditionerModel() {
@@ -175,7 +172,7 @@ public class DisasterRecovery extends Thread {
             this.msgManager.getMsgGUIModel().setConditioningObj(client.getIstance());
 
         }
-        catch(Exception e) {}
+        catch (Exception e) {}
     }
 
     public void setStop() { this.bStop = true; }
