@@ -21,6 +21,7 @@ public class ReadingSmartDoor extends Thread {
     private GenericManager<PCounterModel> managerPCounter;
 
     private boolean bStop = false;
+    private boolean bLightOn = false;
 
     public ReadingSmartDoor() throws MqttException, InvocationTargetException,
         NoSuchMethodException, InstantiationException, IllegalAccessException
@@ -50,12 +51,19 @@ public class ReadingSmartDoor extends Thread {
             this.biometricModel = this.managerBiometric.getObj();
             this.pCounterModel = this.managerPCounter.getObj();
 
+            if (this.pCounterModel.getPeopleIn() > 0)
+                this.bLightOn = true;
+            else
+                this.bLightOn = false;
+
         }
     }
 
     public SmartDoorModel getSmartDoorModel() { return this.smartDoorModel; }
     public BiometricModel getBiometicModel() { return this.biometricModel; }
     public PCounterModel getPCounterModel() { return this.pCounterModel; }
+
+    public boolean getLightOn() { return this.bLightOn; }
     
     public void setStop() { this.bStop = true; }
 }

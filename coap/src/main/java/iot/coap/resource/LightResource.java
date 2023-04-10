@@ -60,7 +60,7 @@ public class LightResource extends CoapResource {
             this.lightManager.getSwitchModel().setOn(!bStatus);
 
             logger.warn("[ LIGHT RESOURCE ] -> [ STATUS ]: {}", !bStatus);
-            exchange.respond(CoAP.ResponseCode.CHANGED);
+            exchange.respond(CoAP.ResponseCode.CHANGED, new String(this.gson.toJson(this.lightManager.getSwitchModel())), exchange.getRequestOptions().getAccept());
         }
         catch (Exception eErr) {
             logger.error("[ LIGHT RESOURCE ] -> [ MESSAGE ]: {}", eErr.getMessage());

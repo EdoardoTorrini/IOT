@@ -59,5 +59,45 @@ public class GeneralClient<TYPE> {
         
         return this.obj;
     }
+
+    public TYPE changeStatusObj() {
+        try {
+
+            CoapClient client = new CoapClient(this.topic);
+            Request request = new Request(Code.POST);
+            
+            CoapResponse response = client.advanced(request);
+            if (!response.isSuccess())
+                throw new Exception(String.format("Status code: %d, on topic: %s - POST", response.getCode(), this.topic));
+
+            this.obj = (TYPE) this.gson.fromJson(new String(response.getPayload()), this.classOfT);
+
+        }
+        catch (Exception eErr) {
+            logger.error("[ GENERAL ERROR ] -> error on: [ get {} ]: {}", this.topic, eErr.getMessage());
+        }
+
+        return this.obj;
+    }
+
+    public TYPE putModel(TYPE obj) {
+        try {
+
+            CoapClient client = new CoapClient(this.topic);
+            Request request = Request.newPut().setURI(client.getURI()).setPayload(this.gson.toJson(obj));
+            
+            request.setConfirmable(true);
+            CoapResponse response = client.advanced(request);
+            if (!response.isSuccess())
+                throw new Exception(String.format("Status code: %d, on topic: %s - PUT", response.getCode(), this.topic));
+
+            this.obj = (TYPE) this.gson.fromJson(new String(response.getPayload()), this.classOfT);
+        }
+        catch (Exception eErr) {
+            logger.error("[ GENERAL ERROR ] -> error on: [ get {} ]: {}", this.topic, eErr.getMessage());
+        }
+
+        return this.obj;
+    }
     
 }

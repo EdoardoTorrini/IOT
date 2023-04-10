@@ -1,15 +1,8 @@
 package iot.data_center.disaster_recovery;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
 
-import org.eclipse.californium.elements.exception.ConnectorException;
-
-import org.eclipse.californium.core.CoapClient;
-import org.eclipse.californium.core.CoapResponse;
-import org.eclipse.californium.core.coap.Request;
-import org.eclipse.californium.core.coap.CoAP.Code;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -96,52 +89,28 @@ public class DisasterRecovery extends Thread {
     }
 
     private void setConditioner(boolean dehumidifier, int level) {
-        
+
         try {
-            CoapClient client = new CoapClient(
-                String.format(
-                    "coap://127.0.0.1:5683/%s", 
-                    MqttConfigurationParameters.TOPIC_CONDITIONER
-                )
-            );
 
             ConditionerModel conditionerModel = new ConditionerModel("", dehumidifier, level);
+            GeneralClient<ConditionerModel> client = new GeneralClient<>(MqttConfigurationParameters.TOPIC_CONDITIONER, ConditionerModel.class);            
 
-            Request request = Request.newPut().setURI(client.getURI()).setPayload(this.gson.toJson(conditionerModel));
-            request.setConfirmable(true);
+            this.msgManager.getMsgGUIModel().setConditioningObj(client.putModel(conditionerModel));
 
-            // vediamo come risponde e nel caso se utilizzarlo
-            CoapResponse response = client.advanced(request);
-            
-            this.msgManager.getMsgGUIModel().setConditioningObj(this.gson.fromJson(new String(response.getPayload()), ConditionerModel.class));
         }
-        catch (ConnectorException | IOException eErr) {
-            logger.error("[ DISASTER RECOVERY ] -> error on: [ set DEHUMIDIFIER and LEVEL AIR ]: {}", eErr.getMessage());
-        }
+        catch(Exception eErr) {}
     }
 
     private void changeStatusAlarm() {
+
         try {
-            CoapClient client = new CoapClient(
-                String.format(
-                    "coap://127.0.0.1:5683/%s",
-                    MqttConfigurationParameters.TOPIC_ALARM
-                )
-            );
 
-            Request request = new Request(Code.POST);
-            request.setConfirmable(true);
-
-            // vediamo come va questo tipo di richiesta
-            CoapResponse response = client.advanced(request);
-
-            this.msgManager.getMsgGUIModel().setAlarmObj(this.gson.fromJson(new String(response.getPayload()), SwitchModel.class));
+            GeneralClient<SwitchModel> client = new GeneralClient<>(MqttConfigurationParameters.TOPIC_ALARM, SwitchModel.class);
+            this.msgManager.getMsgGUIModel().setAlarmObj(client.changeStatusObj());
+            
             this.bAlarm = !this.bAlarm;
-
         }
-        catch (ConnectorException | IOException eErr) {
-            logger.error("[ DISASTER RECOVERY ] -> error on: [ set ALARM {} ]: {}", !this.bAlarm, eErr.getMessage());
-        }
+        catch (Exception eErr) {}
     }
 
     private void changeStatusOfMsg(boolean bAlarm, String msg) {

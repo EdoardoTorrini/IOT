@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import iot.configuration.MqttConfigurationParameters;
 import iot.data_center.client.GeneralClient;
 import iot.data_center.models.actuator.SmartDoorModel;
+import iot.data_center.models.actuator.SwitchModel;
 import iot.data_center.persistance.MessageGUIManager;
 
 public class IntrusionDetectionSystem extends Thread {
@@ -18,6 +19,9 @@ public class IntrusionDetectionSystem extends Thread {
 
     private static final Logger logger = LoggerFactory.getLogger(IntrusionDetectionSystem.class);
     private boolean bStop = false;
+
+    private boolean bAlarm = false;
+    private boolean bLightOn = false;
 
     private ReadingSmartDoor readingSmartDoor;
     private MessageGUIManager msgManager;
@@ -35,12 +39,19 @@ public class IntrusionDetectionSystem extends Thread {
     public void run() {
 
         this.refreshSmartDoorModel();
+        this.refreshAlarmModel();
+        this.refreshLightModel();
 
         while (!this.bStop)
         {
             this.msgManager.getMsgGUIModel().setBiometricObj(this.readingSmartDoor.getBiometicModel());
             this.msgManager.getMsgGUIModel().setPCounterObj(this.readingSmartDoor.getPCounterModel());
 
+            if (this.bLightOn != this.readingSmartDoor.getLightOn())
+                this.changeLightStatus();
+
+
+            // delay for reading
             try {
                 TimeUnit.SECONDS.sleep(60);
             }
@@ -53,6 +64,38 @@ public class IntrusionDetectionSystem extends Thread {
         try {
             GeneralClient<SmartDoorModel> client = new GeneralClient<>(MqttConfigurationParameters.TOPIC_DOOR, SmartDoorModel.class);
             this.msgManager.getMsgGUIModel().setSmartDoorObj(client.getIstance());
+        }
+        catch (Exception e) {}
+    }
+
+    private void changeLightStatus() {
+        try {
+
+            GeneralClient<SwitchModel> client = new GeneralClient<>(MqttConfigurationParameters.TOPIC_LIGHT, SwitchModel.class);
+            this.msgManager.getMsgGUIModel().setLightObj(client.changeStatusObj());
+            
+            this.bLightOn = !this.bLightOn;
+        }
+        catch (Exception e) {}
+    }
+
+    private void refreshAlarmModel() {
+        try {
+
+            GeneralClient<SwitchModel> client = new GeneralClient<>(MqttConfigurationParameters.TOPIC_ALARM, SwitchModel.class);
+            this.msgManager.getMsgGUIModel().setAlarmObj(client.getIstance());
+
+            this.bAlarm = !this.bAlarm;
+        }
+        catch (Exception e) {}
+    }
+
+    public void refreshLightModel() {
+        try {
+
+            GeneralClient<SwitchModel> client = new GeneralClient<>(MqttConfigurationParameters.TOPIC_LIGHT, SwitchModel.class);
+            this.msgManager.getMsgGUIModel().setLightObj(client.getIstance());
+
         }
         catch (Exception e) {}
     }
