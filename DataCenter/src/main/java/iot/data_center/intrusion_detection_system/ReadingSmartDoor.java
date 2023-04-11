@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.eclipse.paho.client.mqttv3.MqttException;
 
 import iot.configuration.MqttConfigurationParameters;
+import iot.data_center.client.ClientHTTP;
 import iot.data_center.models.actuator.SmartDoorModel;
 import iot.data_center.models.sensor.BiometricModel;
 import iot.data_center.models.sensor.PCounterModel;
@@ -22,6 +23,10 @@ public class ReadingSmartDoor extends Thread {
 
     private boolean bStop = false;
     private boolean bLightOn = false;
+    private boolean bLockForcing = false;
+    private boolean bBruteForce = false;
+
+    private boolean bOkDoor = false;
 
     public ReadingSmartDoor() throws MqttException, InvocationTargetException,
         NoSuchMethodException, InstantiationException, IllegalAccessException
@@ -51,11 +56,20 @@ public class ReadingSmartDoor extends Thread {
             this.biometricModel = this.managerBiometric.getObj();
             this.pCounterModel = this.managerPCounter.getObj();
 
-            if (this.pCounterModel.getPeopleIn() > 0)
-                this.bLightOn = true;
-            else
-                this.bLightOn = false;
+            // check for the light on 
+            this.bLightOn = (this.pCounterModel.getPeopleIn() > 0) ? true: false;
+            
+            // check tha attemps to force the lock
+            this.bLockForcing = (this.smartDoorModel.getAcceleration() > 10) ? true : false;
 
+            // check if the id is OK
+            String sToken = this.biometricModel.getToken();
+            if (sToken != null) {
+                if (!sToken.isEmpty())
+                    this.bOkDoor = new ClientHTTP().checkToken(sToken);
+                else
+                    this.bOkDoor = false;
+            }
         }
     }
 
@@ -64,6 +78,10 @@ public class ReadingSmartDoor extends Thread {
     public PCounterModel getPCounterModel() { return this.pCounterModel; }
 
     public boolean getLightOn() { return this.bLightOn; }
+    public boolean getLockForcing() { return this.bLockForcing; }
+    public boolean getBruteForce() { return this.bBruteForce; }
+
+    public boolean getDoorOk() { return this.bOkDoor; }
     
     public void setStop() { this.bStop = true; }
 }

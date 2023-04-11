@@ -3,6 +3,6 @@
       "code": "door.smart.lock.01",
       "is_open": true,
       "lock": true,
-      "accelleration": 8.019991462244665
+      "acceleration": 8.019991462244665
    }
 ]

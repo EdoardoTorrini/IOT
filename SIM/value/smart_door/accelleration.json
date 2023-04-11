@@ -3,120 +3,120 @@
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 12.4630154536198
+      "acceleration": 12.4630154536198
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 10.728086568718018
+      "acceleration": 10.728086568718018
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 9.408857672225754
+      "acceleration": 9.408857672225754
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 7.401707316916877
+      "acceleration": 7.401707316916877
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 15.755219421955811
+      "acceleration": 15.755219421955811
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 13.357800635514648
+      "acceleration": 13.357800635514648
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 19.46898109029281
+      "acceleration": 19.46898109029281
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 7.2259912033187135
+      "acceleration": 7.2259912033187135
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 16.434718395992792
+      "acceleration": 16.434718395992792
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 10.538379575637558
+      "acceleration": 10.538379575637558
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 17.876633981568354
+      "acceleration": 17.876633981568354
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 14.891886482476806
+      "acceleration": 14.891886482476806
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 12.514500404297552
+      "acceleration": 12.514500404297552
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 14.00055262250559
+      "acceleration": 14.00055262250559
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 13.998614623765127
+      "acceleration": 13.998614623765127
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 12.8010338685448
+      "acceleration": 12.8010338685448
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 7.983894001106229
+      "acceleration": 7.983894001106229
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 16.952084924444875
+      "acceleration": 16.952084924444875
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 13.637516525843523
+      "acceleration": 13.637516525843523
    },
    {
       "code": "door.smart.lock.01",
       "is_open": false,
       "lock": true,
-      "accelleration": 18.759403418436214
+      "acceleration": 18.759403418436214
    }
 ]

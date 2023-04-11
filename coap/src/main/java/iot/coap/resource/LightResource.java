@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 
 import iot.coap.persistance.actuator.LightManager;
+import iot.http.ClientHTTP;
 import iot.utils.CoreInterfaces;
+import iot.model.Log;
 
 public class LightResource extends CoapResource {
 
@@ -60,6 +62,18 @@ public class LightResource extends CoapResource {
             this.lightManager.getSwitchModel().setOn(!bStatus);
 
             logger.warn("[ LIGHT RESOURCE ] -> [ STATUS ]: {}", !bStatus);
+
+            ClientHTTP client = new ClientHTTP(
+                new Log(
+                    Log.INFO, 
+                    String.format(
+                        "[ LIGHT RESOURCE ] -> [ ON ]: %b", 
+                        this.lightManager.getSwitchModel().isOn()
+                    )
+                )
+            );
+            client.addLog();
+
             exchange.respond(CoAP.ResponseCode.CHANGED, new String(this.gson.toJson(this.lightManager.getSwitchModel())), exchange.getRequestOptions().getAccept());
         }
         catch (Exception eErr) {

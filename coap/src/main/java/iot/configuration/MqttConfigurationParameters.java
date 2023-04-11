@@ -18,4 +18,6 @@ public class MqttConfigurationParameters {
     public static final String TOPIC_DOOR = "door";
     public static final String TOPIC_DOOR_SIM = "sim/door";
     public static final String TOPIC_CONDITIONER = "conditioner";
+
+    public static final String URI_LOG = "http://127.0.0.1:8081/log/";
 }

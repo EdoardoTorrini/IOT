@@ -4,10 +4,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.TimeUnit;
 
 import org.eclipse.paho.client.mqttv3.MqttException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.gson.Gson;
 
 import iot.configuration.MqttConfigurationParameters;
 import iot.data_center.client.GeneralClient;
@@ -29,8 +25,6 @@ public class DisasterRecovery extends Thread {
     private boolean bAlarm = false;
 
     private boolean bStop = false;
-    private static final Logger logger = LoggerFactory.getLogger(DisasterRecovery.class);
-    private Gson gson;
 
     private ReadingEnvironmetal readingEnvironmetal;
     private MessageGUIManager msgManager;
@@ -40,8 +34,6 @@ public class DisasterRecovery extends Thread {
     {
         this.readingEnvironmetal = new ReadingEnvironmetal();
         this.readingEnvironmetal.start();
-
-        this.gson = new Gson();
 
         this.msgManager = msgManager;
     }

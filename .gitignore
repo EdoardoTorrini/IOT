@@ -13,6 +13,10 @@
 /SIM/views/__pycache__/*
 /SIM/process/__pycache__/*
 /SIM/__pycache__/*
+/DB/models/__pycache__/*
+/DB/models/storage/__pycache__/*
+/DB/views/__pycache__/*
 /coap/target/*
 /DataCenter/logs/*
 *.class
+*.pyc

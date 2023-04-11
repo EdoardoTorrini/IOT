@@ -9,8 +9,10 @@ import org.slf4j.Logger;
 import com.google.gson.Gson;
 
 import iot.coap.persistance.actuator.ConditionerManager;
+import iot.http.ClientHTTP;
 import iot.model.actuator.ConditionerModel;
 import iot.utils.CoreInterfaces;
+import iot.model.Log;
 
 public class ConditionerResource extends CoapResource {
     
@@ -77,14 +79,24 @@ public class ConditionerResource extends CoapResource {
                 
                 if (cm.getDehumidifie() != this.conditionerManager.getConditionerModel().getDehumidifie()) {
                     this.conditionerManager.getConditionerModel().setDehumidifie(cm.getDehumidifie());
-                    logger.info("[ CONDITIONER REOURCE ] -> change [ is ON DEHUMIDIFIER ]: {}", cm.getDehumidifie());
+                    logger.info("[ CONDITIONER RESOURCE ] -> change [ is ON DEHUMIDIFIER ]: {}", cm.getDehumidifie());
                 }
 
                 if (cm.getLevelAirConditioning() != this.conditionerManager.getConditionerModel().getLevelAirConditioning()) {
                     this.conditionerManager.getConditionerModel().setLevelAirConditioning(cm.getLevelAirConditioning());
-                    logger.info("[ CONDITIONER REOURCE ] -> change [ LEVEL AIR CONDITIONING ]: {}", cm.getLevelAirConditioning());
+                    logger.info("[ CONDITIONER RESOURCE ] -> change [ LEVEL AIR CONDITIONING ]: {}", cm.getLevelAirConditioning());
                 }
                 
+                ClientHTTP client = new ClientHTTP(
+                    new Log(
+                        Log.WARNING, 
+                        String.format(
+                            "[ CONDITIONER RESOURCE ] -> [ DEHUMIDIFIER ]: %b, [ LEVEL CONDITIONING ]: %d", 
+                            cm.getDehumidifie(), cm.getLevelAirConditioning()
+                        )
+                    )
+                );
+                client.addLog();
                 exchange.respond(CoAP.ResponseCode.CHANGED, new String(this.gson.toJson(this.conditionerManager.getConditionerModel())), exchange.getRequestOptions().getAccept());
             }
             else

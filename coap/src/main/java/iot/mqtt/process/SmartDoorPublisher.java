@@ -3,24 +3,23 @@ package iot.mqtt.process;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 
-import iot.model.actuator.SmartDoorModel;
+import iot.coap.persistance.actuator.SmartDoorManager;
 import iot.mqtt.ThreadManager;
-import iot.mqtt.persistance.GenericManager;
 
 public class SmartDoorPublisher extends ThreadManager {
-    private final GenericManager<SmartDoorModel> genericManager;
-    private boolean bStop = true;
+    private SmartDoorManager smartDoorManager;
+    private boolean bStop = false;
 
-    public SmartDoorPublisher(String topic, GenericManager<SmartDoorModel> genericManager) throws MqttException {
+    public SmartDoorPublisher(String topic, SmartDoorManager genericManager) throws MqttException {
         super(topic);
-        this.genericManager = genericManager;
+        this.smartDoorManager = genericManager;
     }
 
     @Override
     public void run() {
         try {
             while (!this.bStop) {
-                String payload = this.gson.toJson(this.genericManager.getObj());
+                String payload = this.gson.toJson(this.smartDoorManager.getSDModel());
 
                 if (this.client.isConnected() && !payload.isEmpty() && !this.topic.isEmpty()) {
                     MqttMessage msg = new MqttMessage(payload.getBytes());
@@ -45,7 +44,7 @@ public class SmartDoorPublisher extends ThreadManager {
         }
     }
     
-    public GenericManager<SmartDoorModel> getGenericManager() { return this.genericManager; }
+    public SmartDoorManager getGenericManager() { return this.smartDoorManager; }
 
-    public void setStop(boolean bStop) { this.bStop = bStop; }
+    public void setStop() { this.bStop = true; }
 }

@@ -14,7 +14,7 @@ class Log(Base, CTable):
     description = Column(String)
     data = Column(DateTime)
 
-    def __init__(self, code=0, category=LogType.DEBUG, description=""):
+    def __init__(self, code=0, category=LogType.DEBUG, description="", data=None):
 
         self.code = code
         self.category = category

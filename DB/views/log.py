@@ -5,6 +5,7 @@ from flask_classful import FlaskView
 
 from models import Log
 import json
+from datetime import datetime
 
 
 class LogAPI(FlaskView):
@@ -37,7 +38,7 @@ class LogAPI(FlaskView):
             logs = Log().object.all()
 
             # gestione per l'autoincremento dovuto ad un mal funzionamento di SQLite
-            data["code"] = logs[-1].code + 1 if len(logs) > 0 else 0
+            data["code"] = logs[-1][0].code + 1 if len(logs) > 0 else 0
 
             log = Log(**data)
             log.insert()

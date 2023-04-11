@@ -1,11 +1,11 @@
 package iot.coap.server;
 
+import iot.coap.persistance.actuator.SmartDoorManager;
 import iot.coap.resource.AlarmResource;
 import iot.coap.resource.ConditionerResource;
 import iot.coap.resource.LightResource;
 import iot.coap.resource.SmartDoorResource;
 import iot.configuration.MqttConfigurationParameters;
-import iot.model.actuator.SmartDoorModel;
 import iot.model.sensor.BiometricModel;
 import iot.model.sensor.EnvironmentalModel;
 import iot.model.sensor.PCounterModel;
@@ -35,8 +35,8 @@ public class IDSCoapProcess extends CoapServer {
     private PCounterPublisher pCounterPublisher;
 
     /* Smart Door Task */
-    private GenericManager<SmartDoorModel> managerSmartDoor;
     private SmartDoorPublisher smartDoorPublisher;
+    private SmartDoorManager smartDoorManager;
 
     /* Biometric Model Task */
     private GenericManager<BiometricModel> managerBiometric;
@@ -63,13 +63,11 @@ public class IDSCoapProcess extends CoapServer {
         this.pCounterPublisher.start();
 
         /* Smart Door Model Task */
-        this.managerSmartDoor = new GenericManager<>(MqttConfigurationParameters.TOPIC_DOOR_SIM, SmartDoorModel.class);
-        this.managerSmartDoor.start();
-
-        this.smartDoorPublisher = new SmartDoorPublisher(MqttConfigurationParameters.TOPIC_DOOR, this.managerSmartDoor);
+        this.smartDoorManager = new SmartDoorManager();
+        this.smartDoorPublisher = new SmartDoorPublisher(MqttConfigurationParameters.TOPIC_DOOR, this.smartDoorManager);
         this.smartDoorPublisher.start();
 
-        /* Biometric Model Task */
+        /* Biometric Model Task */     
         this.managerBiometric = new GenericManager<>(MqttConfigurationParameters.TOPIC_BIOMETRIC_SIM, BiometricModel.class);
         this.managerBiometric.start();
 
@@ -77,7 +75,7 @@ public class IDSCoapProcess extends CoapServer {
         this.biometricPublisher.start();
 
 
-        this.add(new SmartDoorResource(MqttConfigurationParameters.TOPIC_DOOR));
+        this.add(new SmartDoorResource(MqttConfigurationParameters.TOPIC_DOOR, this.smartDoorManager));
         this.add(new AlarmResource(MqttConfigurationParameters.TOPIC_ALARM));
         this.add(new LightResource(MqttConfigurationParameters.TOPIC_LIGHT));
         this.add(new ConditionerResource(MqttConfigurationParameters.TOPIC_CONDITIONER));

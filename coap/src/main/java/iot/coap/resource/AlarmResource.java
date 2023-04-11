@@ -10,7 +10,9 @@ import org.slf4j.LoggerFactory;
 import com.google.gson.Gson;
 
 import iot.coap.persistance.actuator.AlarmManager;
+import iot.http.ClientHTTP;
 import iot.utils.CoreInterfaces;
+import iot.model.Log;
 
 public class AlarmResource extends CoapResource {
     
@@ -60,6 +62,18 @@ public class AlarmResource extends CoapResource {
             this.alarmManager.getSwitchModel().setOn(!bStatus);
 
             logger.warn("[ ALARM RESOURCE ] -> [ STATUS ]: {}", !bStatus);
+
+            ClientHTTP client = new ClientHTTP(
+                new Log(
+                    Log.ERROR, 
+                    String.format(
+                        "[ ALARM RESOURCE ] -> [ ON ]: %b", 
+                        this.alarmManager.getSwitchModel().isOn()
+                    )
+                )
+            );
+            client.addLog();
+
             exchange.respond(CoAP.ResponseCode.CHANGED, new String(this.gson.toJson(this.alarmManager.getSwitchModel())), exchange.getRequestOptions().getAccept());
         }
         catch (Exception eErr) {
