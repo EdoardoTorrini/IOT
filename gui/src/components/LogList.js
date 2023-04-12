@@ -17,8 +17,6 @@ class LogList extends React.Component {
         if (!response.ok) throw new Error(response.status);
 
         const data = await response.json();
-        console.log(data);
-        
         return data;
     }
 

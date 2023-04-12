@@ -6,6 +6,7 @@ from threading import Thread
 
 from server import TOPIC
 from flask import Flask
+from flask_cors import CORS
 from views.environmental import EnvironmentView
 from views.smart_door import SmartDoorView
 from views.biometric import BiometricView
@@ -14,6 +15,8 @@ from os import path
 
 sIp, nPort = "0.0.0.0", 8000
 app = Flask(__name__)
+CORS(app)
+
 EnvironmentView.register(app, route_base="/environment")
 SmartDoorView.register(app, route_base="/smart_door")
 BiometricView.register(app, route_base="/biometric")

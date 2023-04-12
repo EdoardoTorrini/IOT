@@ -16,9 +16,21 @@ class BiometricTokenSend extends React.Component {
         });
     }
 
-    onSubmitForm() {
+    async onSubmitForm() {
         // TODO: send to SIM server
-        console.log(this.state);
+
+        const response = await fetch(
+            "http://127.0.0.1:8000/biometric/",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({id: this.state.token}),
+                redirect: "follow"
+            }
+        )
+
+        if (!response.ok) throw new Error(response.status);
+
         this.setState({
             token: ""
         })
@@ -30,7 +42,7 @@ class BiometricTokenSend extends React.Component {
         return (
             <div className="gap-3">
                 <div className="form-group">
-                    <label htmlFor="token_biometric">Biometric Token</label>
+                    <label htmlFor="token_biometric"><b>Biometric Token</b></label>
                     <input 
                         type="text"
                         name="token"
