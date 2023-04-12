@@ -2,6 +2,7 @@ from http.client import OK, CREATED, BAD_REQUEST, INTERNAL_SERVER_ERROR
 
 from flask import request
 from flask_classful import FlaskView
+from flask import make_response
 
 from models import Log
 import json
@@ -25,7 +26,7 @@ class LogAPI(FlaskView):
                     }
                 )
 
-            return json.dumps(response), OK
+            return make_response(json.dumps(response), OK, {"Content-Type": "application/json"})
 
         except Exception as err:
             print(f"[ INTERNAL SERVER ERROR ]: {err}")

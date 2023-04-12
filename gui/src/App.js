@@ -1,43 +1,33 @@
-import React from "react"
-import {useState, useEffect} from "react";
-import axios from "axios";
+import logo from './logo.svg';
+import React from 'react';
+
+import LogList from './components/LogList'
+import Sim from './components/Sim'
+
 
 function App() {
 
-    const [data, setData] = useState(null);
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await axios.get("http://localhost:8080/log");
-            setData(response.data);
-        };
-
-        fetchData();
-    }, []);
-
-    return (
-        <div id="div_table" className="container text-center">
-            {data ? (
-                <table className="table table-striped">
-                    <tbody>
-                        <tr>
-                            <th>CATEGORIA</th>
-                            <th>DESCRIZIONE</th>
-                            <th>DATA</th>
-                        </tr>
-                        {data.map(item => (
-                            <tr className="log" key={item.code}>
-                                <td>{item.category}</td>
-                                <td>{item.description}</td>
-                                <td>{item.data}</td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            ) : (
-                <div>Loading...</div>
-            )}
+  return (
+    
+    <div className='container gap-3 p-4'>
+      <div className='container'>
+        <h1 className="display-4 fw-normal">Intrusion Detection System & Disaster Recovery</h1>
+      </div>
+      <div className="container gap-3 p-4">
+        <div className="row">
+          <div className="col border p-4">1 di 2</div>
+          <div className="col border p-4" style={{height: '250px'}}><Sim/></div>
         </div>
-    )
+        <div className="row border p-4">
+          <div className='overflow-auto' style={{height: '400px'}}><LogList/></div>
+        </div>
+      </div>
+
+    </div>
+
+
+  );
+
 }
 
 export default App;

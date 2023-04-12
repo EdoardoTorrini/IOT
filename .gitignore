@@ -19,4 +19,4 @@
 /coap/target/*
 /DataCenter/logs/*
 *.class
-*.pyc
+/gui/.vscode/*
