@@ -14,6 +14,7 @@ public class AppServer extends Application<Configuration> {
 
     @Override
     public void run(Configuration arg0, Environment environment) throws Exception {
+
         environment.jersey().register(
             new MessageGUIResource(this.msg)
         );

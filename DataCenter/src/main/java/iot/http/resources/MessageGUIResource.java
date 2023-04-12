@@ -39,7 +39,10 @@ public class MessageGUIResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getStatus(@Context ContainerRequestContext req) {
         try {
-            return Response.ok(this.gson.toJson(this.msg.getMsgGUIModel(), MessageGUIModel.class)).build();
+            return Response.ok(
+                this.gson.toJson(this.msg.getMsgGUIModel(), 
+                MessageGUIModel.class)
+            ).header("Access-Control-Allow-Origin", "*").build();
         }
         catch (Exception eErr) {
             logger.error("[ MESSAGE GUI RESOURCES ] -> [ MESSAGE ]", eErr.getMessage());

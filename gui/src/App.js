@@ -3,6 +3,7 @@ import React from 'react';
 
 import LogList from './components/LogList'
 import Sim from './components/Sim'
+import DataCenter from './components/DataCenter';
 
 
 function App() {
@@ -15,16 +16,15 @@ function App() {
       </div>
       <div className="container gap-3 p-4">
         <div className="row">
-          <div className="col border p-4">1 di 2</div>
-          <div className="col border p-4" style={{height: '250px'}}><Sim/></div>
+          <div className="col border p-2"><DataCenter/></div>
+          <div className="col border p-2"><Sim/></div>
         </div>
-        <div className="row border p-4">
-          <div className='overflow-auto' style={{height: '400px'}}><LogList/></div>
+        <div className="row border p-2">
+          <div className='overflow-auto' style={{height: '375px'}}><LogList/></div>
         </div>
       </div>
 
     </div>
-
 
   );
 

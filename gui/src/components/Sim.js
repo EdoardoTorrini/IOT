@@ -16,10 +16,36 @@ class Sim extends React.Component {
             fire: false,
             acceleration: false,
         };
+
         this.onInputChange = this.onInputChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.onChange = this.onChange.bind(this);
+
+        this.init();
     }
+
+
+    async init() {
+
+        const response = await fetch("http://localhost:8000/environment/", { method: "GET"})
+        if (!response.ok) throw new Error(response.status);
+
+        const data = await response.json();
+
+        if (data.type == "fire")
+            this.setState({ fire: true }); 
+
+        if (data.type == "flooding")
+            this.setState({ flooding: true }); 
+
+        const resp = await fetch("http://localhost:8000/smart_door/", { method: "GET"});
+
+        const smart_door = await resp.json();
+        
+        if (smart_door.type == "accelleration")
+            this.setState({ acceleration: true }); 
+
+    }    
 
     async fetchMethod(path, method, headers, body) {
 
@@ -97,7 +123,7 @@ class Sim extends React.Component {
 
     render() {
         return(
-            <div className="container">
+            <div className="container border">
                 <div className="row">
                     <div className="col">
                         <div className="form-check">
@@ -142,19 +168,17 @@ class Sim extends React.Component {
                     </div>
                     <div className="col"><BiometricTokenSend/></div>
                 </div>
-                <div>
-                    <center>
-                        <div className="btn-group">
-                            <div className="row">
-                                <div className="col p-2">
-                                     <button onClick={this.onSubmit} type="submit" className="btn btn-primary">Simulate</button>
-                                 </div>
-                                <div className="col p-2">
-                                    <button onClick={this.onChange} type="submit" className="btn btn-primary">Reset</button>
-                                </div>
+                <div className="row">
+                    <div className="btn-group">
+                        <div className="row gap-5">
+                            <div className="col p-2">
+                                <button onClick={this.onSubmit} type="submit" className="btn btn-primary">Simulate</button>
+                            </div>
+                            <div className="col p-2">
+                                <button onClick={this.onChange} type="submit" className="btn btn-primary">Reset</button>
                             </div>
                         </div>
-                    </center>
+                    </div>
                 </div>
             </div>
         )

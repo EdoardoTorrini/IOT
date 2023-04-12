@@ -1,15 +1,24 @@
-from http.client import NO_CONTENT, BAD_REQUEST, INTERNAL_SERVER_ERROR
+from http.client import NO_CONTENT, BAD_REQUEST, INTERNAL_SERVER_ERROR, OK
 from configuration.mqtt_config_param import MQTTConfParam
 from process import Publisher
 
 from flask import request
 from flask_classful import FlaskView
+from flask import make_response
 from server import TOPIC
 
 
 class SmartDoorView(FlaskView):
 
     __topic__ = MQTTConfParam.TOPIC_DOOR_SIM
+
+    def get(self):
+
+        state = "random_data"
+        if isinstance(TOPIC[self.__topic__], Publisher):
+            state = TOPIC[self.__topic__].sPath.split("/")[-1].split(".")[0]
+
+        return make_response({ "type": state }, OK, { "Content-type": "application/json" })
 
     def post(self):
 
