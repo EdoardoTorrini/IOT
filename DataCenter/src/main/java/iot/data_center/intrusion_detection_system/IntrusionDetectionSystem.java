@@ -61,7 +61,7 @@ public class IntrusionDetectionSystem extends Thread {
 
             // delay for reading
             try {
-                TimeUnit.SECONDS.sleep(60);
+                TimeUnit.SECONDS.sleep(10);
             }
             catch(InterruptedException e) {}
 

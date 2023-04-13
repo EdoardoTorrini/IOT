@@ -74,7 +74,7 @@ public class DisasterRecovery extends Thread {
             this.refreshAlarmModel();
 
             try {
-                TimeUnit.SECONDS.sleep(60);
+                TimeUnit.SECONDS.sleep(10);
             } 
             catch (InterruptedException e) {}
         }

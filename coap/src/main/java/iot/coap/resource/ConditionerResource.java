@@ -72,6 +72,9 @@ public class ConditionerResource extends CoapResource {
     @Override
     public void handlePUT(CoapExchange exchange) {
         try {
+
+            boolean bSaveLog = false;
+
             String payload = new String(exchange.getRequestPayload());
             ConditionerModel cm = this.gson.fromJson(payload, ConditionerModel.class);
 
@@ -80,23 +83,28 @@ public class ConditionerResource extends CoapResource {
                 if (cm.getDehumidifie() != this.conditionerManager.getConditionerModel().getDehumidifie()) {
                     this.conditionerManager.getConditionerModel().setDehumidifie(cm.getDehumidifie());
                     logger.info("[ CONDITIONER RESOURCE ] -> change [ is ON DEHUMIDIFIER ]: {}", cm.getDehumidifie());
+                    bSaveLog = true;
                 }
 
                 if (cm.getLevelAirConditioning() != this.conditionerManager.getConditionerModel().getLevelAirConditioning()) {
                     this.conditionerManager.getConditionerModel().setLevelAirConditioning(cm.getLevelAirConditioning());
                     logger.info("[ CONDITIONER RESOURCE ] -> change [ LEVEL AIR CONDITIONING ]: {}", cm.getLevelAirConditioning());
+                    bSaveLog = true;
                 }
                 
-                ClientHTTP client = new ClientHTTP(
-                    new Log(
-                        Log.WARNING, 
-                        String.format(
-                            "[ CONDITIONER RESOURCE ] -> [ DEHUMIDIFIER ]: %b, [ LEVEL CONDITIONING ]: %d", 
-                            cm.getDehumidifie(), cm.getLevelAirConditioning()
+                
+                if (bSaveLog) {
+                    ClientHTTP client = new ClientHTTP(
+                        new Log(
+                            Log.WARNING, 
+                            String.format(
+                                "[ CONDITIONER RESOURCE ] -> [ DEHUMIDIFIER ]: %b, [ LEVEL CONDITIONING ]: %d", 
+                                cm.getDehumidifie(), cm.getLevelAirConditioning()
+                            )
                         )
-                    )
-                );
-                client.addLog();
+                    );
+                    client.addLog();
+                }
                 exchange.respond(CoAP.ResponseCode.CHANGED, new String(this.gson.toJson(this.conditionerManager.getConditionerModel())), exchange.getRequestOptions().getAccept());
             }
             else

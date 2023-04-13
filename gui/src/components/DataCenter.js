@@ -7,6 +7,9 @@ import PCounter from "./status/PCounter";
 import SmartDoor from "./status/SmartDoor";
 import Biometric from "./status/Biometric";
 
+import 'bootstrap/dist/css/bootstrap.css';
+import Carousel from 'react-bootstrap/Carousel';
+
 class DataCenter extends React.Component {
 
     constructor(props) {
@@ -58,6 +61,16 @@ class DataCenter extends React.Component {
                         <PCounter data={this.state.datacenter.pCounterModel}/>
                         <SmartDoor data={this.state.datacenter.smartDoorModel}/>
                         <Biometric data={this.state.datacenter.biometricModel}/>
+                        <div className="row border" style={{height: "25px"}}>
+                            <Carousel indicators={false}>
+                                {this.state.datacenter.message.map((msg) => (
+                                    <Carousel.Item interval={5000}>
+                                        <p style={{textAlign: "center"}}>{msg}</p>
+                                    </Carousel.Item>
+                                ))
+                                }
+                            </Carousel>
+                        </div>
                     </div>
                     ) : (<p>Loading ... </p>)}
             </div>
